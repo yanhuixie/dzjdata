@@ -17,7 +17,7 @@ $bundle = BackendAsset::register($this);
  * 在rbac auth实际启用时这段代码多余，只在无任何auth保护时（如dev模式）拦截guest；
  */
 if(Yii::$app->user->isGuest){
-	$this->context->redirect('/admin/sign-in/login');
+	$this->context->redirect('/sign-in/login');
 	Yii::$app->end();
 }
 ?>
@@ -154,6 +154,12 @@ if(Yii::$app->user->isGuest){
                             'label'=>Yii::t('backend', 'System'),
                             'options' => ['class' => 'header'],
                         	'visible'=>Yii::$app->user->can('administrator'),
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Users'),
+                            'icon' => '<i class="fa fa-users"></i>',
+                            'url' => ['/user/index'],
+                            'visible' => Yii::$app->user->can('administrator')
                         ],
                         [
                             'label'=>Yii::t('backend', 'Content'),

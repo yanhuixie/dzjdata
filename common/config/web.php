@@ -7,12 +7,7 @@ $config = [
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
             'linkAssets' => env('LINK_ASSETS'),
-            'appendTimestamp' => YII_ENV_DEV,
-            'bundles' => [
-                // 'nullref\datatable\DataTableAsset' => [
-                //    'styling' => \nullref\datatable\DataTableAsset::STYLING_BOOTSTRAP,
-                // ]
-            ],
+            'appendTimestamp' => YII_ENV_DEV
         ]
     ],
     'as locale' => [

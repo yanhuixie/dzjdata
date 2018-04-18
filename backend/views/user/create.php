@@ -2,7 +2,9 @@
 /* @var $this yii\web\View */
 /* @var $model backend\models\UserForm */
 /* @var $roles yii\rbac\Role[] */
-$this->title = '创建用户';
+$this->title = Yii::t('backend', 'Create {modelClass}', [
+    'modelClass' => 'User',
+]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -10,7 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo $this->render('_form', [
         'model' => $model,
-    	'profile' => $profile,
         'roles' => $roles
     ]) ?>
 

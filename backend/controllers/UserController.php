@@ -82,165 +82,55 @@ class UserController extends Controller
 		]);
 	}
 
-	/**
-	 * Displays a single User model.
-	 * @param integer $id
-	 * @return mixed
-	 */
-	public function actionView($id)
-	{
-		$user = $this->findModel($id);
-		return $this->render('view', [
-			'model' => $user,
-			'profile' => $user->userProfile,
+    /**
+     * Displays a single User model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
-		]);
-	}
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new UserForm();
+        $model->setScenario('create');
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
 
-	/**
-	 * Creates a new User model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 * @return mixed
-	 */
-	public function actionCreate()
-	{
-		$model = new UserForm();
-		$model->setScenario('create');
+        return $this->render('create', [
+            'model' => $model,
+            'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
+        ]);
+    }
 
-		$profile = new UserProfile();
+    /**
+     * Updates an existing User model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = new UserForm();
+        $model->setModel($this->findModel($id));
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
 
-		if(Yii::$app->request->isPost){
-			$valid = true;
-			$transaction = Yii::$app->db->beginTransaction();
-			while($valid){
-				try{
-					$valid = $model->load(Yii::$app->request->post()) && $model->save();
-					if(!$valid){
-						break;
-					}
-					$user = $model->getModel();
-
-					$profile = $user->userProfile ? $user->userProfile : $profile;
-					$valid = $profile->load(Yii::$app->request->post()) ;
-					if(!$valid){
-						break;
-					}
-					$profile->user_id = $user->id;
-					$profile->locale = Yii::$app->language;
-					$valid = $profile->save();
-					if(!$valid){
-						break;
-					}
-
-					$transaction->commit();
-					return $this->redirect(['index']);
-				}
-				catch(\Exception $e) {
-					if($transaction) $transaction->rollBack();
-					throw $e;
-				}
-
-				break;
-			}
-
-			if(!$valid){
-				if($transaction) $transaction->rollBack();
-				Yii::$app->session->setFlash('alert', [
-					'body' => Yii::t('frontend', 'There is an error in the data you submit, please fix it and submit again.'),
-					'options' => ['class' => 'alert-danger']
-				]);
-			}
-		}
-
-		return $this->render('create', [
-			'model' => $model,
-			'profile' => $profile,
-			'roles' => ArrayHelper::map($this->filterRoles(), 'name', 'name')
-		]);
-	}
-
-	/**
-	 * Updates an existing User model.
-	 * @param integer $id
-	 * @return mixed
-	 */
-	public function actionUpdate($id)
-	{
-		$user = $this->findModel($id);
-		$model = new UserForm();
-		$model->setModel($user);
-		$profile = $user->userProfile;
-
-		if(!$profile) $profile = new UserProfile();
-		
-		$errors = [];
-		if(Yii::$app->request->isPost){
-			$valid = true;
-			$transaction = Yii::$app->db->beginTransaction();
-			while($valid){
-				try{
-					$valid = $model->load(Yii::$app->request->post()) && $model->save();
-					if(!$valid){
-						$errors = array_merge($errors, $model->getErrors());
-						break;
-					}
-
-					$valid = $profile->load(Yii::$app->request->post()) ;
-					if(!$valid){
-						$errors = array_merge($errors, $profile->getErrors());
-						break;
-					}
-
-					$valid = $profile->save();
-					if(!$valid){
-						$errors = array_merge($errors, $profile->getErrors());
-						break;
-					}
-
-					$transaction->commit();
-					//
-                    $redirect = empty(Yii::$app->request->get("action")) ? 'index' : Yii::$app->request->get("action");
-					return $this->redirect([$redirect]);
-				}
-				catch(\Exception $e) {
-					if($transaction) $transaction->rollBack();
-					throw $e;
-				}
-
-				break;
-			}
-
-			if(!$valid){
-				if($transaction) $transaction->rollBack();
-				$err = CmnHelper::combineValidationErrors($errors, '<br>');
-				Yii::$app->session->setFlash('alert', [
-					'body' => Yii::t('frontend', 'There is an error in the data you submit, please fix it and submit again.')."<br>".$err,
-					'options' => ['class' => 'alert-danger']
-				]);
-			}
-		}
-
-		return $this->render('update', [
-			'model' => $model,
-			'profile' => $profile,
-			'roles' => ArrayHelper::map($this->filterRoles(), 'name', 'name')
-		]);
-	}
-
-	/**
-	 * 禁止将普通用户指定为administrator
-	 * @return \yii\rbac\Role[]
-	 */
-	private function filterRoles(){
-		$roles = Yii::$app->authManager->getRoles();
-		$rolesF = [];
-		foreach ($roles as $role){
-			if($role->name != 'administrator'){
-				$rolesF[] = $role;
-			}
-		}
-		return $rolesF;
-	}
+        return $this->render('update', [
+            'model' => $model,
+            'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
+        ]);
+    }
 
 	/**
 	 * Deletes an existing User model.

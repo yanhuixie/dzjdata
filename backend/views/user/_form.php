@@ -1,12 +1,8 @@
 <?php
 
 use common\models\User;
-use kartik\tree\TreeViewInput;
-use kartik\widgets\DatePicker;
-use kartik\builder\Form;
 use yii\helpers\Html;
-use kartik\widgets\ActiveForm;
-use common\base\BizMeta;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\UserForm */
@@ -16,90 +12,16 @@ use common\base\BizMeta;
 ?>
 
 <div class="user-form">
-	<?php echo "<legend>个人信息</legend>"; ?>
-	<?php $form = ActiveForm::begin(); 	
-		echo Form::widget([
-			'model'=>$profile,
-			'form'=>$form,
-			'columns'=>2,
-			'attributes'=>[
-				'picture' =>[
-					'type' => Form::INPUT_WIDGET,
-					'widgetClass' => '\trntv\filekit\widget\Upload',
-					'options' =>[
-						'url' => ['avatar-upload']
-					]
-				],
-			]
-		]);
-		
-		echo Form::widget([
-			'model'=>$profile,
-			'form'=>$form,
-			'columns'=>2,
-			'attributes'=>[
-				'firstname'=>[ 
-					'type' => Form::INPUT_TEXT,
-					'options' => [
-						'placeholder' => '实名全称'
-					] 
-				],
-				'gender'=>[ 
-					'type' => Form::INPUT_RADIO_LIST,
-					'items' => BizMeta::genders(),
-					'options'=>[ 
-						'inline' => true,
-					],
-				],
-			]
-		]);
-	?>
 
-	<?php echo "<legend>系统信息</legend>"; ?>
-	<?php
-		echo Form::widget([
-			'model'=>$model,
-			'form'=>$form,
-			'columns'=>2,
-			'attributes'=>[
-				'username'=>[ 
-					'type' => Form::INPUT_TEXT,
-					'options' => [
-						'placeholder' => '为登录本系统所用，不能重复'
-					] 
-				],
-				'email'=>[ 
-					'type' => Form::INPUT_TEXT,
-					'options' => [
-						'placeholder' => '为登录本系统所用，不能重复'
-					] 
-				],
-				'password'=>[ 
-					'type' => Form::INPUT_PASSWORD,
-					'options' => [
-						'placeholder' => $model->scenario == 'create' ? '至少6位' : '如不修改请留空'
-					] 
-				],
-				'status' => [ 
-					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => User::statuses(),
-					'options'=>[ 
-						'prompt'=> ''
-					],
-				],
-				'roles' => [ 
-					'type' => Form::INPUT_CHECKBOX_LIST,
-					'items' => $roles,
-					'options'=>[ 
-						'inline' => true,
-					],
-				],
-			]
-		]);
-	?>
-	<div class="form-group">
-		<?php echo Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-	</div>
-	<?php ActiveForm::end(); ?>
+    <?php $form = ActiveForm::begin(); ?>
+        <?php echo $form->field($model, 'username') ?>
+        <?php echo $form->field($model, 'email') ?>
+        <?php echo $form->field($model, 'password')->passwordInput() ?>
+        <?php echo $form->field($model, 'status')->dropDownList(User::statuses()) ?>
+        <?php echo $form->field($model, 'roles')->checkboxList($roles) ?>
+        <div class="form-group">
+            <?php echo Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+        </div>
+    <?php ActiveForm::end(); ?>
 
 </div>
