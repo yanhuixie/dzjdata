@@ -65,7 +65,7 @@ class UserProfile extends ActiveRecord
         	[['firstname', 'middlename', 'lastname'], 'filter', 'filter'=>'\yii\helpers\HtmlPurifier::process'], 
         		
             [['user_id', 'gender', 'firstname'], 'required'],
-        	[['picture'], 'required', 'on'=>'sign-up'],
+        //	[['picture'], 'required', 'on'=>'sign-up'],
             [['user_id', 'gender'], 'integer'],
             [['gender'], 'in', 'range' => [NULL, self::GENDER_FEMALE, self::GENDER_MALE]],
             [['firstname', 'middlename', 'lastname', 'avatar_path', 'avatar_base_url'], 'string', 'max' => 255],
