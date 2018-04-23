@@ -1,7 +1,7 @@
 <?php
 return [
     'id' => 'frontend',
-	'name'=>'DZJDATA',
+	'name'=>'TripitakaData',
     'basePath' => dirname(__DIR__),
     'components' => [
         'urlManager' => require(__DIR__.'/_urlManager.php'),

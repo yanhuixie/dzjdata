@@ -3,7 +3,7 @@
 ## 安装和初始化步骤（假定使用Windows和xampp，基于PHP7.0）
 1. 安装好git、xampp、配置php.ini，注意要启用php_pdo_pgsql.dll 和 php_intl.dll  
 2. 安装好PostgreSQL 10 并启动，创建数据库 dzjdata，假定 用户名密码都是 postgres，本机安装，缺省端口  
-3. 选择一个目录容纳该工程，比如 C:/develop/，然后 git clone https://github.com/yanhuixie/dzjdata.git  
+3. 选择一个目录容纳该工程，比如 C:/develop/，然后 git clone https://github.com/lqsaiitc/dzjdata.git  
 4. 下载 https://pan.baidu.com/s/1MvzL9inQYcZ8LnRl125HXw 并解压缩vendor 到 dzjdata 工程目录下  
 5. 复制 .env.dst 为 .env，然后修改如下内容  
 ```shell
