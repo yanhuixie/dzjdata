@@ -76,36 +76,6 @@ class TptkErrorCharController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing TptkErrorChar model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        $model = $this->findModel($id);
-        $pageArr = explode('_', $model->page);
-        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/'.$pageArr[0].'/image/'.$pageArr[1].'/'.$model->page.'.jpg';
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // 保存
-            if (($curTask = TptkErrorCharTask::findOne($id)) !== null) {
-                $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
-                $curTask->save();
-            }
-
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-
-    }
 
     /**
      * Deletes an existing TptkErrorChar model.
@@ -138,36 +108,113 @@ class TptkErrorCharController extends Controller
     }
 
     /**
-     * @return mixed
+     * Add.
+     * Check errors.
+     * @id tptk_error_char_id
+     * @update 0: 工作提交，完成后跳转下一个任务； 1：更新提交，完成后跳转查看页面
      */
-    public function actionCheck($id=null)
+    public function actionCheck($id = null, $update = 0)
     {
-        if(!$id) {
+        if (!$id) {
             $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
-            return $this->redirect(['check', 'id' => $nextTask->id]);
+            return $this->redirect(['check', 'id' => $nextTask->tptk_error_char_id]);
         }
 
         $model = $this->findModel($id);
-        if(empty($model->check_txt)) {
+        if (empty($model->check_txt)) {
             $model->check_txt = $model->line_txt;
         }
         $pageArr = explode('_', $model->page_code);
-        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/'.$pageArr[0].'/image/'.$pageArr[1].'/'.$model->page_code.'.jpg';
+        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // 保存上一条记录
-            if (($curTask = TptkErrorCharTask::findOne($id)) !== null) {
+            // 保存当前记录
+            $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id'=>$id, 'task_type' => TptkErrorCharTask::TYPE_CHECK]);
+            if ($curTask !== null) {
                 $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
                 $curTask->save();
             }
 
-            // 获取下一条记录
-            $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
-            return $this->redirect(['check', 'id' => $nextTask->id]);
+            // 将审查任务状态设置为就绪
+            $ConfirmTask = TptkErrorCharTask::findOne(['tptk_error_char_id'=>$curTask->tptk_error_char_id, 'task_type' => TptkErrorCharTask::TYPE_CONFIRM]);
+            if ($ConfirmTask !== null) {
+                $ConfirmTask->status = TptkErrorCharTask::STATUS_UNASSIGNED;
+                $ConfirmTask->save();
+            }
+
+            // 跳转
+            if ($update) {
+                return $this->redirect(['view', 'id' => $id]);
+            } else {
+                // 获取下一条记录
+                $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
+                return $this->redirect(['check', 'id' => $nextTask->tptk_error_char_id]);
+            }
         }
 
         return $this->render('check', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Add.
+     * Confirm errors.
+     * @id tptk_error_char_id
+     * @update 0: 工作提交，完成后跳转下一个任务； 1：更新提交，完成后跳转查看页面
+     */
+    public function actionConfirm($id = null, $update = 0)
+    {
+        if (!$id) {
+            $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CONFIRM);
+            if ($nextTask) {
+                return $this->redirect(['confirm', 'id' => $nextTask->tptk_error_char_id]);
+            } else {
+                return $this->redirect(['no-task']);
+            }
+        }
+
+        $model = $this->findModel($id);
+        if (empty($model->confirm_txt)) {
+            $model->confirm_txt = $model->check_txt;
+        }
+        $pageArr = explode('_', $model->page_code);
+        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // 保存当前记录
+            $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id'=>$id, 'task_type' => TptkErrorCharTask::TYPE_CONFIRM]);
+            if ($curTask !== null) {
+                $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
+                $curTask->save();
+            }
+
+            // 跳转
+            if ($update) {
+                return $this->redirect(['view', 'id' => $id]);
+            } else {
+                // 获取下一条记录
+                $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CONFIRM);
+                if ($nextTask) {
+                    return $this->redirect(['confirm', 'id' => $nextTask->tptk_error_char_id]);
+                } else {
+                    return $this->redirect(['no-task']);
+                }
+            }
+        }
+
+        return $this->render('confirm', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Add.
+     * Confirm errors.
+     */
+    public function actionNoTask()
+    {
+
+        return $this->render('no-task');
     }
 }

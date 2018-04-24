@@ -173,13 +173,9 @@ class TptkErrorCharTaskController extends Controller
     public function actionMyCheck()
     {
         $searchModel = new TptkErrorCharTaskSearch();
-
-        $conditions = array_merge(Yii::$app->request->queryParams, array(
-                'TptkErrorCharTaskSearch' => array(
-                    'user_id' => Yii::$app->user->id,
-                    'task_type' => TptkErrorCharTask::TYPE_CHECK)
-            )
-        );
+        $conditions = Yii::$app->request->queryParams;
+        $conditions['TptkErrorCharTaskSearch']['user_id'] = Yii::$app->user->id;
+        $conditions['TptkErrorCharTaskSearch']['task_type'] = TptkErrorCharTask::TYPE_CHECK;
 
         $dataProvider = $searchModel->search($conditions);
 
@@ -197,12 +193,9 @@ class TptkErrorCharTaskController extends Controller
     public function actionMyConfirm()
     {
         $searchModel = new TptkErrorCharTaskSearch();
-        $conditions = array_merge(Yii::$app->request->queryParams, array(
-                'TptkErrorCharTaskSearch' => array(
-                    'user_id' => Yii::$app->user->id,
-                    'task_type' => TptkErrorCharTask::TYPE_CHECK)
-            )
-        );
+        $conditions = Yii::$app->request->queryParams;
+        $conditions['TptkErrorCharTaskSearch']['user_id'] = Yii::$app->user->id;
+        $conditions['TptkErrorCharTaskSearch']['task_type'] = TptkErrorCharTask::TYPE_CONFIRM;
 
         $dataProvider = $searchModel->search($conditions);
 
@@ -219,13 +212,9 @@ class TptkErrorCharTaskController extends Controller
      */
     public function actionCheck()
     {
-//        var_dump(Yii::$app->request->queryParams);
-//        echo '<br/>';
         $searchModel = new TptkErrorCharTaskSearch();
         $conditions = Yii::$app->request->queryParams;
         $conditions['TptkErrorCharTaskSearch']['task_type'] = TptkErrorCharTask::TYPE_CHECK;
-//        var_dump($conditions);
-//        die;
 
         $dataProvider = $searchModel->search($conditions);
 
@@ -243,11 +232,8 @@ class TptkErrorCharTaskController extends Controller
     public function actionConfirm()
     {
         $searchModel = new TptkErrorCharTaskSearch();
-        $conditions = array_merge(Yii::$app->request->queryParams, array(
-                'TptkErrorCharTaskSearch' => array(
-                    'task_type' => TptkErrorCharTask::TYPE_CONFIRM)
-            )
-        );
+        $conditions = Yii::$app->request->queryParams;
+        $conditions['TptkErrorCharTaskSearch']['task_type'] = TptkErrorCharTask::TYPE_CONFIRM;
 
         $dataProvider = $searchModel->search($conditions);
 

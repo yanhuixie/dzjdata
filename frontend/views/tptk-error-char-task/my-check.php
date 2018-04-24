@@ -2,18 +2,17 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\User;
 use frontend\models\TptkErrorCharTask;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\TptkErrorCharTaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '阙疑文字校对任务';
+$this->title = '阙疑文字校对 / 任务管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tptk-error-char-task-index">
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 
     <?= GridView::widget([
@@ -25,17 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id',
             [
                 'label' => '阙疑页码',
-                'attribute' => 'tptk_page',
+                'attribute' => 'tptk_page_code',
+                'headerOptions' => ['style' => 'width:10%'],
                 'format' => 'raw',
                 'value' => function ($data) {
                     //超链接
-                    return Html::a($data->tptkErrorChar->page, "/tptk-error-char/update?id=" . $data->tripitaka_error_char_id, ['title' => '查看', 'target' => '_blank']);
+                    return Html::a($data->tptkErrorChar->page_code, "/tptk-error-char/check?update=true&id=" . $data->tptk_error_char_id, ['title' => '查看', 'target' => '_blank']);
                 }
             ],
             [
                 'label' => '行号',
-                'attribute' => 'tptk_line',
-                'value' => 'tptkErrorChar.line',
+                'attribute' => 'tptk_line_num',
+                'headerOptions' => ['style' => 'width:5%'],
+                'value' => 'tptkErrorChar.line_num',
             ],
             [
                 'label' => '原始文字',
@@ -49,23 +50,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'status',
+                'headerOptions' => ['style' => 'width:8%'],
                 'value' => function ($data) {
-                    return empty($data['status']) ? '' : TptkErrorCharTask::statuses()[$data['status']];
+                    return TptkErrorCharTask::statuses()[$data['status']];
                 },
                 'filter' => TptkErrorCharTask::statuses()
             ],
             [
-                'attribute' => 'created_at',
+                'attribute' => 'assigned_at',
+                'headerOptions' => ['style' => 'width:12%'],
                 'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
             [
-                'attribute' => 'updated_at',
+                'attribute' => 'completed_at',
+                'headerOptions' => ['style' => 'width:12%'],
                 'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
-            //'created_at',
-            //'updated_at',
 
             //['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+
+    ?>
 </div>

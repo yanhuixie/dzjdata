@@ -24,9 +24,10 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
     const TYPE_CONFIRM = 2;
 
     // 任务状态
-    const STATUS_UNASSIGNED = 0;
-    const STATUS_ASSIGNED = 1;
-    const STATUS_FINISHED = 2;
+    const STATUS_UNREADY = 0;
+    const STATUS_UNASSIGNED = 1;
+    const STATUS_ASSIGNED = 2;
+    const STATUS_FINISHED = 3;
 
     /**
      * @inheritdoc
@@ -88,6 +89,7 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
     public static function statuses()
     {
         return [
+            self::STATUS_UNREADY => '未就绪',
             self::STATUS_UNASSIGNED => '未分配',
             self::STATUS_ASSIGNED => '进行中',
             self::STATUS_FINISHED => '已完成',

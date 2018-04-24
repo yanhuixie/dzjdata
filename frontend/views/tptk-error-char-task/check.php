@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($data) {
                     //超链接
-                    return Html::a($data->tptkErrorChar->page_code, "/tptk-error-char/update?id=" . $data->tptk_error_char_id, ['title' => '查看', 'target' => '_blank']);
+                    return Html::a($data->tptkErrorChar->page_code, "/tptk-error-char/check?update=1&id=" . $data->tptk_error_char_id, ['title' => '查看', 'target' => '_blank']);
                 }
             ],
             [

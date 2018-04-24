@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model frontend\models\TptkErrorChar */
 
 $this->title = $model->page_code;
-$this->params['breadcrumbs'][] = '阙疑文字校对';
+$this->params['breadcrumbs'][] = '阙疑文字审查';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -39,7 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->errorSummary($model); ?>
             <?= $form->field($model, 'line_num')->textInput(['readonly' => true]) ?>
             <?= $form->field($model, 'error_char')->textInput(['maxlength' => true, 'readonly' => true]) ?>
-            <?= $form->field($model, 'check_txt')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'line_txt')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+            <?= $form->field($model, 'check_txt')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+            <?= $form->field($model, 'confirm_txt')->textInput(['maxlength' => true]) ?>
             <div class="form-group">
                 <?= Html::submitButton('提交', ['class' => 'btn btn-success']) ?>
             </div>
