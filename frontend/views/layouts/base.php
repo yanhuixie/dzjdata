@@ -56,6 +56,16 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                     ]
                 ],
                 [
+                    'label' => '数据管理',
+                    'visible' => !Yii::$app->user->isGuest,
+                    'items' => [
+                        [
+                            'label' => '阙疑文字',
+                            'url' => ['tptk-error-char/index']
+                        ],
+                    ]
+                ],
+                [
                     'label' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->getPublicIdentity(),
                     'visible' => !Yii::$app->user->isGuest,
                     'items' => [

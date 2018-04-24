@@ -38,6 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'tptkErrorChar.line',
             ],
             [
+                'label' => '原始文字',
+                'attribute' => 'tptk_line_txt',
+                'value' => 'tptkErrorChar.line_txt',
+            ],
+            [
                 'label' => '校对结果',
                 'attribute' => 'tptk_check_txt',
                 'value' => 'tptkErrorChar.check_txt',

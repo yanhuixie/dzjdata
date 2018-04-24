@@ -8,11 +8,11 @@ use Yii;
  * This is the model class for table "tptk_error_char".
  *
  * @property string $id
- * @property string $page
+ * @property string $page_code
  * @property string $image_path
- * @property int $line
- * @property string $line_txt
+ * @property int $line_num
  * @property string $error_char
+ * @property string $line_txt
  * @property string $check_txt
  * @property string $confirm_txt
  * @property int $status
@@ -20,6 +20,7 @@ use Yii;
  */
 class TptkErrorChar extends \yii\db\ActiveRecord
 {
+
 
     public $imagePath;
     /**
@@ -36,10 +37,11 @@ class TptkErrorChar extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['line', 'status'], 'default', 'value' => null],
-            [['line', 'status'], 'integer'],
-            [['page', 'error_char'], 'string', 'max' => 16],
+            [['line_num', 'status'], 'default', 'value' => null],
+            [['line_num', 'status'], 'integer'],
+            [['page_code'], 'string', 'max' => 16],
             [['image_path'], 'string', 'max' => 64],
+            [['error_char'], 'string', 'max' => 32],
             [['line_txt', 'check_txt', 'confirm_txt', 'remark'], 'string', 'max' => 128],
         ];
     }
@@ -50,16 +52,20 @@ class TptkErrorChar extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'page' => '页码',
-            'image_path' => '图片路径',
-            'line' => '行号',
-            'line_txt' => '行文本',
-            'error_char' => '阙疑文字',
-            'check_txt' => '校对结果',
-            'confirm_txt' => '审定结果',
-            'status' => '状态',
-            'remark' => '备注',
+            'id' => Yii::t('frontend', 'ID'),
+            'page_code' => Yii::t('frontend', 'Page Code'),
+            'image_path' => Yii::t('frontend', 'Image Path'),
+            'line_num' => Yii::t('frontend', 'Line Num'),
+            'error_char' => Yii::t('frontend', 'Error Char'),
+            'line_txt' => Yii::t('frontend', 'Line Txt'),
+            'check_txt' => Yii::t('frontend', 'Check Txt'),
+            'confirm_txt' => Yii::t('frontend', 'Confirm Txt'),
+            'status' => Yii::t('frontend', 'Status'),
+            'remark' => Yii::t('frontend', 'Remark'),
         ];
     }
+
+
 }
+
+

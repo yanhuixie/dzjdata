@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -18,8 +18,8 @@ class TptkErrorCharSearch extends TptkErrorChar
     public function rules()
     {
         return [
-            [['id', 'line', 'status'], 'integer'],
-            [['page', 'image_path', 'line_txt', 'error_char', 'check_txt', 'confirm_txt', 'remark'], 'safe'],
+            [['id', 'line_num', 'status'], 'integer'],
+            [['page_code', 'image_path', 'error_char', 'line_txt', 'check_txt', 'confirm_txt', 'remark'], 'safe'],
         ];
     }
 
@@ -60,14 +60,14 @@ class TptkErrorCharSearch extends TptkErrorChar
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'line' => $this->line,
+            'line_num' => $this->line_num,
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['ilike', 'page', $this->page])
+        $query->andFilterWhere(['ilike', 'page_code', $this->page_code])
             ->andFilterWhere(['ilike', 'image_path', $this->image_path])
-            ->andFilterWhere(['ilike', 'line_txt', $this->line_txt])
             ->andFilterWhere(['ilike', 'error_char', $this->error_char])
+            ->andFilterWhere(['ilike', 'line_txt', $this->line_txt])
             ->andFilterWhere(['ilike', 'check_txt', $this->check_txt])
             ->andFilterWhere(['ilike', 'confirm_txt', $this->confirm_txt])
             ->andFilterWhere(['ilike', 'remark', $this->remark]);

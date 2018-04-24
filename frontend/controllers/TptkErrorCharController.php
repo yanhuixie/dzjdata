@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
-use frontend\models\TptkErrorCharTask;
 use Yii;
 use frontend\models\TptkErrorChar;
-use frontend\models\TptkErrorCharSearch;
+use frontend\models\search\TptkErrorCharSearch;
+use frontend\models\TptkErrorCharTask;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -59,35 +59,19 @@ class TptkErrorCharController extends Controller
     }
 
     /**
+     * Creates a new TptkErrorChar model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCheck($id=null)
+    public function actionCreate()
     {
-        if(!$id) {
-            $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
-            return $this->redirect(['check', 'id' => $nextTask->id]);
-        }
-
-        $model = $this->findModel($id);
-        if(empty($model->check_txt)) {
-            $model->check_txt = $model->line_txt;
-        }
-        $pageArr = explode('_', $model->page);
-        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/'.$pageArr[0].'/image/'.$pageArr[1].'/'.$model->page.'.jpg';
+        $model = new TptkErrorChar();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // 保存上一条记录
-            if (($curTask = TptkErrorCharTask::findOne($id)) !== null) {
-                $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
-                $curTask->save();
-            }
-
-            // 获取下一条记录
-            $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
-            return $this->redirect(['check', 'id' => $nextTask->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('check', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
@@ -150,6 +134,40 @@ class TptkErrorCharController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('common', 'The requested page does not exist.'));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionCheck($id=null)
+    {
+        if(!$id) {
+            $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
+            return $this->redirect(['check', 'id' => $nextTask->id]);
+        }
+
+        $model = $this->findModel($id);
+        if(empty($model->check_txt)) {
+            $model->check_txt = $model->line_txt;
+        }
+        $pageArr = explode('_', $model->page_code);
+        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/'.$pageArr[0].'/image/'.$pageArr[1].'/'.$model->page_code.'.jpg';
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // 保存上一条记录
+            if (($curTask = TptkErrorCharTask::findOne($id)) !== null) {
+                $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
+                $curTask->save();
+            }
+
+            // 获取下一条记录
+            $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
+            return $this->redirect(['check', 'id' => $nextTask->id]);
+        }
+
+        return $this->render('check', [
+            'model' => $model,
+        ]);
     }
 }

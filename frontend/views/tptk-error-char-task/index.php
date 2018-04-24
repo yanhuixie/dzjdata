@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\TptkErrorCharTaskSearch */
+/* @var $searchModel frontend\models\search\TptkErrorCharTaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tptk Error Char Tasks';
+$this->title = Yii::t('common', 'Tptk Error Char Tasks');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tptk-error-char-task-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Tptk Error Char Task', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('common', 'Create Tptk Error Char Task'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,12 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'tripitaka_error_char_id',
+            'tptk_error_char_id',
             'user_id',
             'task_type',
             'status',
             //'created_at',
-            //'updated_at',
+            //'assigned_at',
+            //'completed_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

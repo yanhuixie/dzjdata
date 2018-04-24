@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			echo Form::widget([
 				'model'=>$profile,
 				'form'=>$form,
-				'columns'=>3,
+				'columns'=>2,
 				'attributes'=>[
 					'firstname'=>[ 
 						'type' => Form::INPUT_TEXT,
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'placeholder' => '实名全称'
 						] 
 					],
-					'gender'=>[ 
+					'gender'=>[
 						'type' => Form::INPUT_RADIO_LIST,
 						'items' => BizMeta::genders(),
 						'options'=>[ 
@@ -60,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		?>
 	
 		<?php echo "<legend>系统信息</legend>"; ?>
+        <div></div>
 		<?php
 			echo Form::widget([
 				'model'=>$model,

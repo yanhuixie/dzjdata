@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -12,8 +12,9 @@ use frontend\models\TptkErrorCharTask;
  */
 class TptkErrorCharTaskSearch extends TptkErrorCharTask
 {
-    public $tptk_page;
-    public $tptk_line;
+    public $tptk_page_code;
+    public $tptk_line_num;
+    public $tptk_line_txt;
     public $tptk_check_txt;
 
     /**
@@ -22,10 +23,11 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
     public function rules()
     {
         return [
-            [['id', 'tripitaka_error_char_id', 'user_id', 'task_type', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['tptk_page', 'tptk_line', 'tptk_check_txt'], 'safe']
+            [['id', 'tptk_error_char_id', 'user_id', 'task_type', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
+            [['tptk_page_code', 'tptk_line_num', 'tptk_line_txt', 'tptk_check_txt'], 'safe']
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -34,18 +36,6 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'tptk_page' => '阙疑页码',
-            'tptk_line' => '行文本',
-            'tptk_check_txt' => '校对结果',
-        ];
     }
 
     /**
@@ -60,7 +50,6 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
         $query = TptkErrorCharTask::find();
         $query->joinWith(['user']);
         $query->joinWith(['tptkErrorChar']);
-//        $query->select("user.*, tptk_error_char.*, tptk_error_char_task.*");
 
         // add conditions that should always apply here
 
@@ -69,7 +58,7 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
         ]);
 
         // 添加额外的类属性
-        $addSortAttributes = ['tptk_page', 'tptk_line', 'tptk_check_txt'];
+        $addSortAttributes = ['tptk_page_code', 'tptk_line_num', 'tptk_line_txt', 'tptk_check_txt'];
         foreach ($addSortAttributes as $addSortAttribute) {
             $dataProvider->sort->attributes[$addSortAttribute] = [
                 'asc' => [$addSortAttribute => SORT_ASC],
@@ -77,6 +66,7 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
                 'label' => $this->getAttributeLabel($addSortAttribute),
             ];
         }
+
 
 
         $this->load($params);
@@ -90,17 +80,19 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'tripitaka_error_char_id' => $this->tripitaka_error_char_id,
+            'tptk_error_char_id' => $this->tptk_error_char_id,
             'user_id' => $this->user_id,
             'task_type' => $this->task_type,
-            'status' => $this->status,
+            'tptk_error_char_task.status' => $this->status,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'assigned_at' => $this->assigned_at,
+            'completed_at' => $this->completed_at,
         ]);
 
-        $query->andFilterWhere(['tptk_error_char.page' => $this->tptk_page]);
-//        $query->andFilterWhere(['tptk_line' => $this->tptk_line]);
-//        $query->andFilterWhere(['like', 'tptk_check_txt', $this->tptk_check_txt]);
+        $query->andFilterWhere(['tptk_error_char.line_num' => $this->tptk_line_num]);
+        $query->andFilterWhere(['like', 'tptk_error_char.page_code', $this->tptk_page_code]);
+        $query->andFilterWhere(['like', 'tptk_error_char.line_txt', $this->tptk_line_txt]);
+        $query->andFilterWhere(['like', 'tptk_error_char.check_txt', $this->tptk_check_txt]);
 
         return $dataProvider;
     }

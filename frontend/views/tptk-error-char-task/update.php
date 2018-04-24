@@ -5,10 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\TptkErrorCharTask */
 
-$this->title = 'Update Tptk Error Char Task: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Tptk Error Char Tasks', 'url' => ['index']];
+$this->title = Yii::t('common', 'Update Tptk Error Char Task: {nameAttribute}', [
+    'nameAttribute' => $model->id,
+]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('common', 'Tptk Error Char Tasks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('common', 'Update');
 ?>
 <div class="tptk-error-char-task-update">
 

@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\TptkErrorChar */
 
-$this->title = $model->page;
+$this->title = $model->page_code;
 $this->params['breadcrumbs'][] = ['label' => '阙疑文字', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -31,13 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <button class="btn btn-default glyphicon glyphicon-zoom-out"
                         onclick="changeSize('image-page','-');"></button>
             </div>
-            <img src="<?= $model->imagePath ?>" alt="<?= $model->page ?>" id="image-page" style="width:100%;"/>
+            <img src="<?= $model->imagePath ?>" alt="<?= $model->page_code ?>" id="image-page" style="width:100%;"/>
         </div>
 
         <div class="col-md-4">
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->errorSummary($model); ?>
-            <?= $form->field($model, 'line')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'line_num')->textInput(['readonly' => true]) ?>
             <?= $form->field($model, 'error_char')->textInput(['maxlength' => true, 'readonly' => true]) ?>
             <?= $form->field($model, 'check_txt')->textInput(['maxlength' => true]) ?>
             <div class="form-group">

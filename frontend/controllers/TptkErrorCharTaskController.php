@@ -4,7 +4,8 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\TptkErrorCharTask;
-use frontend\models\TptkErrorCharTaskSearch;
+use frontend\models\search\TptkErrorCharTaskSearch;
+use frontend\models\TptkErrorChar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -122,16 +123,57 @@ class TptkErrorCharTaskController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('common', 'The requested page does not exist.'));
     }
 
     /**
-     * Lists all TptkErrorCharTask models.
-     * @return mixed
+     * Add.
+     * Generate task.
+     */
+    public function actionGenerateTask()
+    {
+        $count = TptkErrorChar::find()->count();
+
+        $t = time();
+
+        // 生成初校任务
+        for($i = 1; $i<=$count; $i++) {
+            $model = new TptkErrorCharTask();
+            $model->id = $i;
+            $model->tptk_error_char_id = $i;
+            $model->task_type = 1;
+            $model->status = 0;
+            $model->created_at = $t;
+            if (!$model->save()) {
+                echo $i . ': generate check task failed.';
+            }
+        }
+
+        // 生成审查任务
+        for($i = 1; $i<=$count; $i++) {
+            $model = new TptkErrorCharTask();
+            $model->id = $count + $i;
+            $model->tptk_error_char_id = $i;
+            $model->task_type = 2;
+            $model->status = 0;
+            $model->created_at = $t;
+            if (!$model->save()) {
+                echo $i . ': generate confirm task failed.';
+            }
+        }
+
+        echo 'generate success.';
+    }
+
+
+    /**
+     * Add.
+     * My check task.
      */
     public function actionMyCheck()
     {
         $searchModel = new TptkErrorCharTaskSearch();
+
         $conditions = array_merge(Yii::$app->request->queryParams, array(
                 'TptkErrorCharTaskSearch' => array(
                     'user_id' => Yii::$app->user->id,
@@ -149,8 +191,8 @@ class TptkErrorCharTaskController extends Controller
 
 
     /**
-     * Lists all TptkErrorCharTask models.
-     * @return mixed
+     * Add.
+     * My confirm task.
      */
     public function actionMyConfirm()
     {
@@ -172,17 +214,18 @@ class TptkErrorCharTaskController extends Controller
 
 
     /**
-     * Lists all TptkErrorCharTask models.
-     * @return mixed
+     * Add.
+     * Check task.
      */
     public function actionCheck()
     {
+//        var_dump(Yii::$app->request->queryParams);
+//        echo '<br/>';
         $searchModel = new TptkErrorCharTaskSearch();
-        $conditions = array_merge(Yii::$app->request->queryParams, array(
-                'TptkErrorCharTaskSearch' => array(
-                    'task_type' => TptkErrorCharTask::TYPE_CHECK)
-            )
-        );
+        $conditions = Yii::$app->request->queryParams;
+        $conditions['TptkErrorCharTaskSearch']['task_type'] = TptkErrorCharTask::TYPE_CHECK;
+//        var_dump($conditions);
+//        die;
 
         $dataProvider = $searchModel->search($conditions);
 
@@ -194,8 +237,8 @@ class TptkErrorCharTaskController extends Controller
 
 
     /**
-     * Lists all TptkErrorCharTask models.
-     * @return mixed
+     * Add.
+     * Confirm task.
      */
     public function actionConfirm()
     {
@@ -213,5 +256,4 @@ class TptkErrorCharTaskController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
 }

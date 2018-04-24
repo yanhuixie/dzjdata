@@ -3,26 +3,22 @@
 namespace frontend\models;
 
 use Yii;
-use frontend\models\TptkErrorChar;
 use common\models\User;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-
 
 /**
  * This is the model class for table "tptk_error_char_task".
  *
  * @property string $id
- * @property string $tripitaka_error_char_id
+ * @property string $tptk_error_char_id
  * @property int $user_id
  * @property int $task_type
  * @property int $status
  * @property int $created_at
- * @property int $updated_at
+ * @property int $assigned_at
+ * @property int $completed_at
  */
 class TptkErrorCharTask extends \yii\db\ActiveRecord
 {
-
     // 任务类型
     const TYPE_CHECK = 1;
     const TYPE_CONFIRM = 2;
@@ -46,9 +42,9 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'task_type', 'status', 'created_at', 'updated_at'], 'default', 'value' => null],
-            [['user_id', 'task_type', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
+            [['user_id', 'task_type', 'status', 'created_at', 'assigned_at', 'completed_at'], 'default', 'value' => null],
+            [['user_id', 'task_type', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
+            [['created_at'], 'required'],
         ];
     }
 
@@ -58,31 +54,18 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'tripitaka_error_char_id' => '阙疑文字ID',
-            'user_id' => 'User ID',
-            'task_type' => '任务类型',
-            'status' => '任务状态',
-            'created_at' => '创建时间',
-            'updated_at' => '更新时间',
+            'id' => Yii::t('frontend', 'ID'),
+            'tptk_error_char_id' => Yii::t('frontend', 'Tptk Error Char ID'),
+            'user_id' => Yii::t('frontend', 'User ID'),
+            'task_type' => Yii::t('frontend', 'Task Type'),
+            'status' => Yii::t('frontend', 'Status'),
+            'created_at' => Yii::t('frontend', 'Created At'),
+            'assigned_at' => Yii::t('frontend', 'Assigned At'),
+            'completed_at' => Yii::t('frontend', 'Completed At'),
         ];
     }
 
-    /**
-     * 自动更新创建和更新时间
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-            ],
-        ];
-    }
+
 
     /**
      * 阶段
@@ -138,6 +121,7 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
             }
 
             $unFinishedTask->user_id = Yii::$app->user->id;
+            $unFinishedTask->assigned_at = time();
             $unFinishedTask->status = SELF::STATUS_ASSIGNED;
             $unFinishedTask->save();
         }
@@ -147,7 +131,7 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
 
     public function  getTptkErrorChar()
     {
-        return $this->hasOne(TptkErrorChar::className(), ['id' => 'tripitaka_error_char_id']);
+        return $this->hasOne(TptkErrorChar::className(), ['id' => 'tptk_error_char_id']);
     }
 
     public function  getUser()
@@ -155,5 +139,3 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
-
-
