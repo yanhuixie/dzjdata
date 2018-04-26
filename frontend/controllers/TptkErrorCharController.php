@@ -124,19 +124,24 @@ class TptkErrorCharController extends Controller
         if (empty($model->check_txt)) {
             $model->check_txt = $model->line_txt;
         }
+        if (empty($model->if_doubt)) {
+            $model->if_doubt = 0;
+        }
+
         $pageArr = explode('_', $model->page_code);
-        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
+        $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
+        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             // 保存当前记录
-            $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id'=>$id, 'task_type' => TptkErrorCharTask::TYPE_CHECK]);
+            $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id' => $id, 'task_type' => TptkErrorCharTask::TYPE_CHECK]);
             if ($curTask !== null) {
                 $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
                 $curTask->save();
             }
 
             // 将审查任务状态设置为就绪
-            $ConfirmTask = TptkErrorCharTask::findOne(['tptk_error_char_id'=>$curTask->tptk_error_char_id, 'task_type' => TptkErrorCharTask::TYPE_CONFIRM]);
+            $ConfirmTask = TptkErrorCharTask::findOne(['tptk_error_char_id' => $curTask->tptk_error_char_id, 'task_type' => TptkErrorCharTask::TYPE_CONFIRM]);
             if ($ConfirmTask !== null) {
                 $ConfirmTask->status = TptkErrorCharTask::STATUS_UNASSIGNED;
                 $ConfirmTask->save();
@@ -178,12 +183,13 @@ class TptkErrorCharController extends Controller
         if (empty($model->confirm_txt)) {
             $model->confirm_txt = $model->check_txt;
         }
+
         $pageArr = explode('_', $model->page_code);
         $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             // 保存当前记录
-            $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id'=>$id, 'task_type' => TptkErrorCharTask::TYPE_CONFIRM]);
+            $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id' => $id, 'task_type' => TptkErrorCharTask::TYPE_CONFIRM]);
             if ($curTask !== null) {
                 $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
                 $curTask->save();
