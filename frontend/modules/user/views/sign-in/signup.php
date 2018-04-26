@@ -21,24 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="user-form">
 		<?php echo "<legend>个人信息</legend>"; ?>
 		<?php $form = ActiveForm::begin(['id' => 'form-signup', 'enableAjaxValidation' => false]); 	
-			// echo Form::widget([
-			// 	'model'=>$profile,
-			// 	'form'=>$form,
-			// 	'columns'=>1,
-			// 	'attributes'=>[
-			// 		'picture' =>[
-			// 			'type' => Form::INPUT_WIDGET,
-			// 			'widgetClass' => '\trntv\filekit\widget\Upload',
-			// 			'options' =>[
-			// 				'url' => ['avatar-upload']
-			// 			],
-			// 			'hint' => '请注意必须为本人真实照片'
-			// 		],
-			// 	]
-			// ]);
-			
+
 			echo Form::widget([
-				'model'=>$profile,
+				'model'=>$model,
 				'form'=>$form,
 				'columns'=>2,
 				'attributes'=>[

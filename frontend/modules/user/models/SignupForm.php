@@ -35,6 +35,18 @@ class SignupForm extends Model
      * @var string
      */
     public $verifyCode;
+    
+    /**
+     * 
+     * @var string
+     */
+    public $firstname;
+    
+    /**
+     * 
+     * @var int
+     */
+    public $gender;
 
     /**
      * @inheritdoc
@@ -43,12 +55,13 @@ class SignupForm extends Model
     {
         return [
             ['username', 'filter', 'filter' => 'trim'],
-            [['username', 'verifyCode'], 'required'],
+            [['username', 'verifyCode', 'firstname', 'gender'], 'required'],
             ['username', 'unique',
                 'targetClass'=>'\common\models\User',
                 'message' => Yii::t('frontend', 'This username has already been taken.')
             ],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            [['username', 'firstname'], 'string', 'min' => 2, 'max' => 100],
+            [['gender'], 'in', 'range' => [NULL, UserProfile::GENDER_FEMALE, UserProfile::GENDER_MALE]],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
@@ -72,6 +85,8 @@ class SignupForm extends Model
     {
         return [
             'username'=>Yii::t('frontend', 'Username'),
+            'firstname' => Yii::t('common', 'Full Name'),
+            'gender' => Yii::t('common', 'Gender'),
             'email'=>Yii::t('frontend', 'E-mail'),
             'password'=>Yii::t('frontend', 'Password'),
         	'verifyCode' => Yii::t('frontend', 'Verification Code')
@@ -99,7 +114,7 @@ class SignupForm extends Model
         };
 
 //         $user->afterSignup(array_merge($profile->attributes, ['picture'=>$profile->picture])); 
-        $user->afterSignup();
+        $user->afterSignup(['firstname'=>$this->firstname, 'gender'=>$this->gender]);
 
         if ($shouldBeActivated) {
             $token = UserToken::create(
