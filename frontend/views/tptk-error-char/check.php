@@ -29,17 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="tptk-error-char-view">
 
 
-        <div class="col-md-8" style="overflow:auto; height: 700px;">
+        <div class="col-md-7" style="overflow:auto; height: 700px;">
             <div class="control-button">
                 <button class="btn btn-default glyphicon glyphicon-zoom-in"
                         onclick="changeSize('image-page','+');"></button>
                 <button class="btn btn-default glyphicon glyphicon-zoom-out"
                         onclick="changeSize('image-page','-');"></button>
             </div>
-            <img src="<?= $model->imagePath ?>" alt="<?= $model->page_code ?>" id="image-page" style="width:120%;"/>
+            <img src="<?= $model->imagePath ?>" alt="<?= $model->page_code ?>" id="image-page" style="width:130%;"/>
         </div>
 
-        <div class="col-md-4 check-form">
+        <div class="col-md-5 check-form">
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->errorSummary($model); ?>
             <?= $form->field($model, 'line_num')->textInput(['readonly' => true]) ?>

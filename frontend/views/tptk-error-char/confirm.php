@@ -22,22 +22,26 @@ $this->params['breadcrumbs'][] = $this->title;
         .doubt {
             color: red;
         }
+
+        .check-form input {
+            font-size: 18px;
+        }
     </style>
 
     <div class="tptk-error-char-view">
 
 
-        <div class="col-md-8" style="overflow:auto; height: 600px;">
+        <div class="col-md-7" style="overflow:auto; height: 600px;">
             <div class="control-button">
                 <button class="btn btn-default glyphicon glyphicon-zoom-in"
                         onclick="changeSize('image-page','+');"></button>
                 <button class="btn btn-default glyphicon glyphicon-zoom-out"
                         onclick="changeSize('image-page','-');"></button>
             </div>
-            <img src="<?= $model->imagePath ?>" alt="<?= $model->page_code ?>" id="image-page" style="width:100%;"/>
+            <img src="<?= $model->imagePath ?>" alt="<?= $model->page_code ?>" id="image-page" style="width:130%;"/>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-5 check-form">
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->errorSummary($model); ?>
             <?= $form->field($model, 'line_num')->textInput(['readonly' => true]) ?>
