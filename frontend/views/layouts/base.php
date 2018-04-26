@@ -41,7 +41,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 ],
                 [
                     'label' => Yii::t('frontend', '图文类型检查'),
-//                    'visible' => Utils::hasRole('图文类型检查'),
+                    'visible' => Utils::hasRole('图文类型检查'),
                     'url' => ['/tptk-page/check']
                 ],
                 [
@@ -75,14 +75,14 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                         ],
                         [
                             'label' => '图文类型检查',
-//                            'visible' => Utils::hasRole('图文类型检查'),
+                            'visible' => Utils::hasRole('图文类型检查'),
                             'url' => ['tptk-page/my-task']
                         ],
                     ]
                 ],
                 [
                     'label' => '任务管理',
-                    'visible' => Utils::hasRole('管理员'),
+                    'visible' => Utils::hasRole('业务管理员'),
                     'items' => [
                         [
                             'label' => '阙疑文字校对',
@@ -100,7 +100,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 ],
                 [
                     'label' => '数据管理',
-                    'visible' => Utils::hasRole('管理员'),
+                    'visible' => Utils::hasRole('业务管理员'),
                     'items' => [
                         [
                             'label' => '阙疑文字',
