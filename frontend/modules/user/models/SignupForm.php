@@ -80,56 +80,46 @@ class SignupForm extends Model
 
     /**
      * Signs user up.
-     * @param UserProfile $profile
      * @return User|null the saved model or null if saving fails
      */
-    public function signup($profile)
+    public function signup()
     {
         if (!$this->validate()) {
         	return null;
         }
-        
-        $transaction = Yii::$app->db->beginTransaction();
-        try{
-            $shouldBeActivated = $this->shouldBeActivated();
-            $user = new User();
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->status = $shouldBeActivated ? User::STATUS_NOT_ACTIVE : User::STATUS_ACTIVE;
-            $user->setPassword($this->password);
-            if(!$user->save()) {
-                throw new Exception("User couldn't be  saved");
-            };
-            
-            $user->afterSignup(array_merge($profile->attributes, ['picture'=>$profile->picture]));
 
-            if ($shouldBeActivated) {
-                $token = UserToken::create(
-                    $user->id,
-                    UserToken::TYPE_ACTIVATION,
-                    Time::SECONDS_IN_A_DAY
-                );
-                
-                Yii::$app->commandBus->handle(new SendEmailCommand([
-                    'subject' => Yii::t('frontend', 'Welcome to {name}, please activate your account', ['name'=>Yii::$app->name]),
-                    'view' => 'activation',
-                    'to' => $this->email,
-                    'params' => [
-                    	'user' => $user,
-                        'url' => Url::to(['/user/sign-in/activation', 'token' => $token->token], true)
-                    ]
-                ]));
-            }
+        $shouldBeActivated = $this->shouldBeActivated();
+        $user = new User();
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->status = $shouldBeActivated ? User::STATUS_NOT_ACTIVE : User::STATUS_ACTIVE;
+        $user->setPassword($this->password);
+        if(!$user->save()) {
+            throw new Exception("User couldn't be  saved");
+        };
+
+//         $user->afterSignup(array_merge($profile->attributes, ['picture'=>$profile->picture])); 
+        $user->afterSignup();
+
+        if ($shouldBeActivated) {
+            $token = UserToken::create(
+                $user->id,
+                UserToken::TYPE_ACTIVATION,
+                Time::SECONDS_IN_A_DAY
+            );
             
-            $transaction->commit();
-            return $user;
+            Yii::$app->commandBus->handle(new SendEmailCommand([
+                'subject' => Yii::t('frontend', 'Welcome to {name}, please activate your account', ['name'=>Yii::$app->name]),
+                'view' => 'activation',
+                'to' => $this->email,
+                'params' => [
+                	'user' => $user,
+                    'url' => Url::to(['/user/sign-in/activation', 'token' => $token->token], true)
+                ]
+            ]));
         }
-    	catch(\Exception $e) {
-			if($transaction) $transaction->rollBack();
-			throw $e;
-		}
-
-        return null;
+        
+        return $user;
     }
 
     /**
