@@ -106,6 +106,7 @@ class TptkErrorCharController extends Controller
             $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id' => $id, 'task_type' => TptkErrorCharTask::TYPE_CHECK]);
             if ($curTask !== null) {
                 $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
+                $curTask->completed_at = time();
                 $curTask->save();
             }
 
@@ -161,6 +162,7 @@ class TptkErrorCharController extends Controller
             $curTask = TptkErrorCharTask::findOne(['tptk_error_char_id' => $id, 'task_type' => TptkErrorCharTask::TYPE_CONFIRM]);
             if ($curTask !== null) {
                 $curTask->status = TptkErrorCharTask::STATUS_FINISHED;
+                $curTask->completed_at = time();
                 $curTask->save();
             }
 

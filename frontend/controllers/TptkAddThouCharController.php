@@ -84,7 +84,6 @@ class TptkAddThouCharController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             // 保存当前记录
-            $model->user_id = Yii::$app->user->id;
             $model->status = TptkAddThouChar::STATUS_FINISHED;
             $model->user_id = Yii::$app->user->id;
             $model->completed_at = time();

@@ -49,6 +49,7 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
         ];
     }
 
+
     /**
      * @inheritdoc
      */
@@ -65,7 +66,6 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
             'completed_at' => Yii::t('frontend', 'Completed At'),
         ];
     }
-
 
 
     /**
@@ -131,12 +131,12 @@ class TptkErrorCharTask extends \yii\db\ActiveRecord
         return $unFinishedTask;
     }
 
-    public function  getTptkErrorChar()
+    public function getTptkErrorChar()
     {
         return $this->hasOne(TptkErrorChar::className(), ['id' => 'tptk_error_char_id']);
     }
 
-    public function  getUser()
+    public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
