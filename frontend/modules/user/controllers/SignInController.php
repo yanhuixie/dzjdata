@@ -141,12 +141,8 @@ class SignInController extends \yii\web\Controller
     public function actionSignup()
     {
         $model = new SignupForm();
-		$profile = new UserProfile();
-		$profile->scenario = 'sign-up';
-
         if ($model->load(Yii::$app->request->post())) {
-        	$profile->load(Yii::$app->request->post()) ;
-        	$user = $model->signup($profile);
+            $user = $model->signup();
             if ($user) {
                 if ($model->shouldBeActivated()) {
                     Yii::$app->getSession()->setFlash('alert', [
@@ -154,7 +150,7 @@ class SignInController extends \yii\web\Controller
                             'frontend',
                             'Your account has been successfully created. Check your email for further instructions.'
                         ),
-                        'options' => ['class'=>'alert-success']
+                        'options' => ['class' => 'alert-success']
                     ]);
                 } else {
                     Yii::$app->getUser()->login($user);
@@ -164,8 +160,7 @@ class SignInController extends \yii\web\Controller
         }
 
         return $this->render('signup', [
-            'model' => $model,
-        	'profile' => $profile,
+            'model' => $model
         ]);
     }
 

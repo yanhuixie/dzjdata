@@ -266,21 +266,10 @@ class User extends ActiveRecord implements IdentityInterface
                 'created_at' => $this->created_at
             ]
         ]));
-        
-        if(!empty($profileData)){
-	        $profile = new UserProfile();
-	        $profile->load($profileData, '');
-	        $profile->locale = Yii::$app->language;
-	        
-	        if(isset($profileData['picture'])){
-	        	$profile->picture = $profileData['picture'];
-	        }
-	        
-	        $profile->user_id = $this->id;
-	        $profile->save();
-        }
-        
-        //$this->link('userProfile', $profile);
+        $profile = new UserProfile();
+        $profile->locale = Yii::$app->language;
+        $profile->load($profileData, '');
+        $this->link('userProfile', $profile);
         $this->trigger(self::EVENT_AFTER_SIGNUP);
         // Default role
         $auth = Yii::$app->authManager;
