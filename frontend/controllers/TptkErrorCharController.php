@@ -30,20 +30,7 @@ class TptkErrorCharController extends Controller
         ];
     }
 
-    /**
-     * Lists all TptkErrorChar models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new TptkErrorCharSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * Displays a single TptkErrorChar model.
@@ -59,36 +46,18 @@ class TptkErrorCharController extends Controller
     }
 
     /**
-     * Creates a new TptkErrorChar model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Lists all TptkErrorChar models.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionAdmin()
     {
-        $model = new TptkErrorChar();
+        $searchModel = new TptkErrorCharSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
+        return $this->render('admin', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
-    }
-
-
-    /**
-     * Deletes an existing TptkErrorChar model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

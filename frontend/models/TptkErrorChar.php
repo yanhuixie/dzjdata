@@ -37,8 +37,8 @@ class TptkErrorChar extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['line_num', 'status'], 'default', 'value' => null],
-            [['line_num', 'status'], 'integer'],
+            [['line_num', 'if_doubt'], 'default', 'value' => null],
+            [['line_num', 'if_doubt'], 'integer'],
             [['page_code'], 'string', 'max' => 16],
             [['image_path'], 'string', 'max' => 64],
             [['error_char'], 'string', 'max' => 32],
@@ -60,7 +60,7 @@ class TptkErrorChar extends \yii\db\ActiveRecord
             'line_txt' => Yii::t('frontend', 'Line Txt'),
             'check_txt' => Yii::t('frontend', 'Check Txt'),
             'confirm_txt' => Yii::t('frontend', 'Confirm Txt'),
-            'status' => Yii::t('frontend', 'Status'),
+            'if_doubt' => Yii::t('frontend', 'If Doubt'),
             'remark' => Yii::t('frontend', 'Remark'),
         ];
     }

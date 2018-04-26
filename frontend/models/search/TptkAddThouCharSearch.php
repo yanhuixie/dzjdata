@@ -5,12 +5,12 @@ namespace frontend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\TptkErrorChar;
+use frontend\models\TptkAddThouChar;
 
 /**
- * TptkErrorCharSearch represents the model behind the search form of `frontend\models\TptkErrorChar`.
+ * TptkAddThouCharSearch represents the model behind the search form of `frontend\models\TptkAddThouChar`.
  */
-class TptkErrorCharSearch extends TptkErrorChar
+class TptkAddThouCharSearch extends TptkAddThouChar
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class TptkErrorCharSearch extends TptkErrorChar
     public function rules()
     {
         return [
-            [['id', 'line_num', 'if_doubt'], 'integer'],
-            [['page_code', 'image_path', 'error_char', 'line_txt', 'check_txt', 'confirm_txt', 'remark'], 'safe'],
+            [['id', 'block_num', 'line_num', 'is_right', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
+            [['page_code', 'add_txt', 'remark'], 'safe'],
         ];
     }
 
@@ -41,13 +41,12 @@ class TptkErrorCharSearch extends TptkErrorChar
      */
     public function search($params)
     {
-        $query = TptkErrorChar::find();
+        $query = TptkAddThouChar::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_ASC]]
         ]);
 
         $this->load($params);
@@ -61,16 +60,18 @@ class TptkErrorCharSearch extends TptkErrorChar
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'block_num' => $this->block_num,
             'line_num' => $this->line_num,
-            'if_doubt' => $this->if_doubt,
+            'is_right' => $this->is_right,
+            'user_id' => $this->user_id,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'assigned_at' => $this->assigned_at,
+            'completed_at' => $this->completed_at,
         ]);
 
         $query->andFilterWhere(['ilike', 'page_code', $this->page_code])
-            ->andFilterWhere(['ilike', 'image_path', $this->image_path])
-            ->andFilterWhere(['ilike', 'error_char', $this->error_char])
-            ->andFilterWhere(['ilike', 'line_txt', $this->line_txt])
-            ->andFilterWhere(['ilike', 'check_txt', $this->check_txt])
-            ->andFilterWhere(['ilike', 'confirm_txt', $this->confirm_txt])
+            ->andFilterWhere(['ilike', 'add_txt', $this->add_txt])
             ->andFilterWhere(['ilike', 'remark', $this->remark]);
 
         return $dataProvider;

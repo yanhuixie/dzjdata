@@ -9,7 +9,8 @@ use frontend\models\TptkErrorCharTask;
 /* @var $searchModel frontend\models\TptkErrorCharTaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '阙疑文字审查 / 任务管理';
+$this->title = '阙疑文字审查';
+$this->params['breadcrumbs'][] = '我的任务';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tptk-error-char-task-index">

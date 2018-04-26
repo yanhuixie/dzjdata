@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'line_txt',
             'check_txt',
             'confirm_txt',
-            'status',
+            'if_doubt',
             'remark',
         ],
     ]) ?>

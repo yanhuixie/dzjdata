@@ -2,19 +2,18 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use frontend\models\TptkAddThouChar;
 use common\models\User;
-use frontend\models\TptkErrorCharTask;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\TptkErrorCharTaskSearch */
+/* @var $searchModel frontend\models\search\TptkAddThouCharSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '阙疑文字审查';
+$this->title = Yii::t('frontend', 'Tptk Add Thou Chars');
 $this->params['breadcrumbs'][] = '任务管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tptk-error-char-task-index">
-
+<div class="tptk-add-thou-char-index">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -22,38 +21,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
+//            'id',
             [
-                'label' => '阙疑页码',
-                'attribute' => 'tptk_page_code',
+                'label' => '页码',
+                'attribute' => 'page_code',
                 'headerOptions' => ['style' => 'width:10%'],
                 'format' => 'raw',
                 'value' => function ($data) {
                     //超链接
-                    return Html::a($data->tptkErrorChar->page_code, "/tptk-error-char/check?update=1&id=" . $data->tptk_error_char_id, ['title' => '查看', 'target' => '_blank']);
+                    return Html::a($data->page_code, "/tptk-add-thou-char/check?update=1&id=" . $data->id, ['title' => '查看', 'target' => '_blank']);
                 }
             ],
             [
-                'label' => '行号',
-                'attribute' => 'tptk_line_num',
+                'attribute' => 'block_num',
+                'value' => 'block_num',
                 'headerOptions' => ['style' => 'width:5%'],
-                'value' => 'tptkErrorChar.line_num',
             ],
             [
-                'label' => '原始文字',
-                'attribute' => 'tptk_line_txt',
-                'value' => 'tptkErrorChar.line_txt',
+                'attribute' => 'line_num',
+                'value' => 'line_num',
+                'headerOptions' => ['style' => 'width:5%'],
             ],
             [
-                'label' => '校对结果',
-                'attribute' => 'tptk_check_txt',
-                'value' => 'tptkErrorChar.check_txt',
+                'attribute' => 'add_txt',
+                'value' => 'add_txt',
+                'headerOptions' => ['style' => 'width:12%'],
             ],
             [
-                'label' => '审查结果',
-                'attribute' => 'tptk_confirm_txt',
-                'value' => 'tptkErrorChar.confirm_txt',
+                'attribute' => 'is_right',
+                'headerOptions' => ['style' => 'width:8%'],
+                'value' => function ($data) {
+                    return array(1 => '是', 0 => '否', null => '')[$data['is_right']];
+                },
+                'filter' => array(1 => '是', 0 => '否'),
             ],
+            'remark',
             [
                 'label' => '领取用户',
                 'headerOptions' => ['style' => 'width:8%'],
@@ -64,9 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'headerOptions' => ['style' => 'width:8%'],
                 'value' => function ($data) {
-                    return TptkErrorCharTask::statuses()[$data['status']];
+                    return TptkAddThouChar::statuses()[$data['status']];
                 },
-                'filter' => TptkErrorCharTask::statuses()
+                'filter' => TptkAddThouChar::statuses()
             ],
             [
                 'attribute' => 'assigned_at',
@@ -79,9 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
 
-            //['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]);
-
-    ?>
+    ]); ?>
 </div>

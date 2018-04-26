@@ -18,6 +18,8 @@
  */
 return [
     'Assigned At' => '分配时间',
+    'Add Txt' => '补录文字',
+    'Block Num' => '栏号',
     'Welcome to {name}, please activate your account' => '欢迎您来到{name}，请激活您的帐号',
     'This email has already been taken.' => '',
     'Your account has been successfully activated.' => '您的账号已经激活。随喜您报名智能信息中心义工。请您耐心等待，两周之内会有人力资源义工联系您面试。',
@@ -47,8 +49,10 @@ return [
     '<a href="{link}">If you forgot your password you can reset it here</a>' => '<a href="{link}">如忘记密码请点此重置 </a>',
     'Line Num' => '行号',
     'Line Txt' => '行文本',
+    'If Doubt' => '是否存疑',
     'Image Path' => '图片路径',
     'Incorrect username or password.' => '用户名或密码错误',
+    'Is Right' => '是否正确',
     'Language' => '语言',
     'Log in with' => 'Log in with',
     'Login' => '登录',
@@ -78,6 +82,7 @@ return [
     'There was an error sending email.' => '发送邮件时发生错误',
     'This email address has already been taken.' => '此邮件已被占用',
     'This username has already been taken.' => '用户名已经被占用',
+    'Tptk Add Thou Chars' => '千字文补录',
     'Tptk Error Chars' => '阙疑文字',
     'Tptk Error Char ID' => '阙疑文字ID',
     'Update' => '更新',

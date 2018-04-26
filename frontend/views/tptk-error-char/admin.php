@@ -8,6 +8,7 @@ use frontend\models\TptkErrorChar;
 /* @var $searchModel frontend\models\search\TptkErrorCharSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$this->params['breadcrumbs'][] = '数据管理';
 $this->title = Yii::t('frontend', 'Tptk Error Chars');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
