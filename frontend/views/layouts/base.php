@@ -40,6 +40,11 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                     'url' => ['/tptk-add-thou-char/check']
                 ],
                 [
+                    'label' => Yii::t('frontend', '图文类型检查'),
+//                    'visible' => Utils::hasRole('图文类型检查'),
+                    'url' => ['/tptk-page/check']
+                ],
+                [
                     'label' => Yii::t('frontend', 'Signup'),
                     'url' => ['/user/sign-in/signup'],
                     'visible' => Yii::$app->user->isGuest
@@ -68,6 +73,11 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                             'visible' => Utils::hasRole('千字文补录'),
                             'url' => ['tptk-add-thou-char/my-task']
                         ],
+                        [
+                            'label' => '图文类型检查',
+//                            'visible' => Utils::hasRole('图文类型检查'),
+                            'url' => ['tptk-page/my-task']
+                        ],
                     ]
                 ],
                 [
@@ -83,8 +93,8 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                             'url' => ['tptk-error-char-task/confirm']
                         ],
                         [
-                            'label' => '千字文补录',
-                            'url' => ['tptk-add-thou-char/task']
+                            'label' => '图文类型检查',
+                            'url' => ['tptk-page/task']
                         ],
                     ]
                 ],
@@ -95,6 +105,10 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                         [
                             'label' => '阙疑文字',
                             'url' => ['tptk-error-char/admin']
+                        ],
+                        [
+                            'label' => '图文数据',
+                            'url' => ['tptk-page/admin']
                         ],
                     ]
                 ],

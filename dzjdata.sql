@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS tptk_add_thou_char (
   line_num int DEFAULT NULL, -- '行号'
   add_txt varchar(128) DEFAULT NULL, -- '问题所在的行文本'
   is_right smallint DEFAULT NULL, -- '是否正确'
-  remark varchar(128) DEFAULT NULL -- '备注'
+  remark varchar(128) DEFAULT NULL, -- '备注'
   user_id INT DEFAULT NULL, -- '用户名'
   status smallint DEFAULT NULL, -- '任务状态：未分配，已分配，已完成'
   created_at INT NOT NULL,
@@ -49,20 +49,15 @@ CREATE TABLE IF NOT EXISTS tptk_page (
   image_path varchar(64) DEFAULT NULL, -- '图片路径'
   txt text DEFAULT NULL, -- '文本'
   if_match smallint DEFAULT NULL, -- '图文是否匹配'
-  page_type smallint DEFAULT NULL, -- '图片类型：含特殊字符、含夹注小字、不含文本、标准图片、图文不匹配'
+  page_type smallint DEFAULT NULL, -- '图片类型：含特殊字符、含夹注小字、不含文本、标准图片'
   frame_cut text DEFAULT NULL, -- '文字框切分信息'
   line_cut text DEFAULT NULL, -- '行切分信息'
   char_cut text DEFAULT NULL, -- '字切分信息'
-  remark varchar(128) DEFAULT NULL -- '备注'
-);
-
--- 大藏经页标注任务
-CREATE TABLE IF NOT EXISTS tptk_page_task (
-  id BIGSERIAL PRIMARY KEY,
-  tptk_page_id BIGSERIAL NOT NULL, -- 'page'
+  remark varchar(128) DEFAULT NULL, -- '备注'
   user_id INT DEFAULT NULL, -- '用户名'
   status smallint DEFAULT NULL, -- '任务状态：未分配，已分配，已完成'
   created_at INT NOT NULL,
   assigned_at  INT DEFAULT NULL,
   completed_at INT DEFAULT NULL
 );
+
