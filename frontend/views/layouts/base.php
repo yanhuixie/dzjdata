@@ -26,7 +26,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 // ['label' => Yii::t('frontend', 'About'), 'url' => ['/page/view', 'slug'=>'about']],
                 [
                     'label' => Yii::t('frontend', '阙疑文字校对'),
-                    'visible' => Utils::hasRole('阙疑文字校对'),
+                    'visible' => !Yii::$app->user->isGuest,
                     'url' => ['/tptk-error-char/check']
                 ],
                 [
@@ -60,7 +60,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                     'items' => [
                         [
                             'label' => '阙疑文字校对',
-                            'visible' => Utils::hasRole('阙疑文字校对'),
+                            'visible' => !Yii::$app->user->isGuest,
                             'url' => ['tptk-error-char-task/my-check']
                         ],
                         [
