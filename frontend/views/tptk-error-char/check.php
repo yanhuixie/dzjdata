@@ -44,8 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->errorSummary($model); ?>
             <?= $form->field($model, 'line_num')->textInput(['readonly' => true]) ?>
             <?= $form->field($model, 'error_char')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+            <?php if (Yii::$app->getRequest()->getQueryParam('update')) echo $form->field($model, 'line_txt')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'check_txt')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'if_doubt')->radioList([0 => '否', 1 => '是'], ['maxlength' => true]) ?>
+            <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
             <div class="form-group">
                 <?= Html::submitButton('提交', ['class' => 'btn btn-success']) ?>
             </div>

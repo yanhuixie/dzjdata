@@ -17,6 +17,8 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
     public $tptk_line_txt;
     public $tptk_check_txt;
     public $tptk_confirm_txt;
+    public $tptk_remark;
+    public $user_name;
 
     /**
      * @inheritdoc
@@ -25,7 +27,7 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
     {
         return [
             [['id', 'tptk_error_char_id', 'user_id', 'task_type', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
-            [['tptk_page_code', 'tptk_line_num', 'tptk_line_txt', 'tptk_check_txt', 'tptk_confirm_txt'], 'safe']
+            [['tptk_page_code', 'tptk_line_num', 'tptk_line_txt', 'tptk_check_txt', 'tptk_confirm_txt', 'tptk_remark', 'user_name'], 'safe']
         ];
     }
 
@@ -65,8 +67,11 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
             'tptk_line_num' => 'tptk_error_char.line_num',
             'tptk_line_txt' => 'tptk_error_char.line_txt',
             'tptk_check_txt' => 'tptk_error_char.check_txt',
-            'tptk_confirm_txt' => 'tptk_error_char.confirm_txt'
+            'tptk_confirm_txt' => 'tptk_error_char.confirm_txt',
+            'tptk_remark' => 'tptk_error_char.remark',
+            'user_name' => 'user.username'
         ];
+
         foreach ($addSortAttributes as $key => $addSortAttribute) {
             $dataProvider->sort->attributes[$key] = [
                 'asc' => [$addSortAttribute => SORT_ASC],
@@ -102,6 +107,8 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
         $query->andFilterWhere(['like', 'tptk_error_char.line_txt', $this->tptk_line_txt]);
         $query->andFilterWhere(['like', 'tptk_error_char.check_txt', $this->tptk_check_txt]);
         $query->andFilterWhere(['like', 'tptk_error_char.confirm_txt', $this->tptk_confirm_txt]);
+        $query->andFilterWhere(['like', 'tptk_error_char.remark', $this->tptk_remark]);
+        $query->andFilterWhere(['like', 'user.username', $this->user_name]);
 
         return $dataProvider;
     }

@@ -12,6 +12,7 @@ use frontend\models\TptkAddThouChar;
  */
 class TptkAddThouCharSearch extends TptkAddThouChar
 {
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class TptkAddThouCharSearch extends TptkAddThouChar
     {
         return [
             [['id', 'block_num', 'line_num', 'is_right', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
-            [['page_code', 'add_txt', 'remark'], 'safe'],
+            [['page_code', 'add_txt', 'remark', 'user_name'], 'safe'],
         ];
     }
 
@@ -44,11 +45,27 @@ class TptkAddThouCharSearch extends TptkAddThouChar
         $query = TptkAddThouChar::find();
 
         // add conditions that should always apply here
+        $query->joinWith(['user']);
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> ['defaultOrder' => ['id'=>SORT_ASC]]
         ]);
+
+        // 添加额外的类属性
+        $addSortAttributes = [
+            'user_name' => 'user.username'
+        ];
+
+        foreach ($addSortAttributes as $key => $addSortAttribute) {
+            $dataProvider->sort->attributes[$key] = [
+                'asc' => [$addSortAttribute => SORT_ASC],
+                'desc' => [$addSortAttribute => SORT_DESC],
+                'label' => $this->getAttributeLabel($addSortAttribute),
+            ];
+        }
 
         $this->load($params);
 
@@ -74,6 +91,8 @@ class TptkAddThouCharSearch extends TptkAddThouChar
         $query->andFilterWhere(['ilike', 'page_code', $this->page_code])
             ->andFilterWhere(['ilike', 'add_txt', $this->add_txt])
             ->andFilterWhere(['ilike', 'remark', $this->remark]);
+
+        $query->andFilterWhere(['like', 'user.username', $this->user_name]);
 
         return $dataProvider;
     }

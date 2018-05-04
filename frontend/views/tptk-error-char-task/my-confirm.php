@@ -64,6 +64,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => TptkErrorCharTask::statuses()
             ],
             [
+                'label' => '备注',
+                'attribute' => 'tptk_remark',
+                'value' => 'tptkErrorChar.remark',
+            ],
+            [
                 'attribute' => 'assigned_at',
                 'headerOptions' => ['style' => 'width:12%'],
                 'format' => ['date', 'php:Y-m-d H:i:s'],

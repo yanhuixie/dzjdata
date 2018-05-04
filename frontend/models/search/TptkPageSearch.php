@@ -12,6 +12,7 @@ use frontend\models\TptkPage;
  */
 class TptkPageSearch extends TptkPage
 {
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class TptkPageSearch extends TptkPage
     {
         return [
             [['id', 'page_source', 'if_match', 'page_type', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
-            [['page_code', 'image_path', 'txt', 'frame_cut', 'line_cut', 'char_cut', 'remark'], 'safe'],
+            [['page_code', 'image_path', 'txt', 'frame_cut', 'line_cut', 'char_cut', 'remark', 'user_name'], 'safe'],
         ];
     }
 
@@ -44,11 +45,28 @@ class TptkPageSearch extends TptkPage
         $query = TptkPage::find();
 
         // add conditions that should always apply here
+        $query->joinWith(['user']);
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['id' => SORT_ASC]]
+            'sort'=> ['defaultOrder' => ['id'=>SORT_ASC]]
         ]);
+
+        // 添加额外的类属性
+        $addSortAttributes = [
+            'user_name' => 'user.username'
+        ];
+
+        foreach ($addSortAttributes as $key => $addSortAttribute) {
+            $dataProvider->sort->attributes[$key] = [
+                'asc' => [$addSortAttribute => SORT_ASC],
+                'desc' => [$addSortAttribute => SORT_DESC],
+                'label' => $this->getAttributeLabel($addSortAttribute),
+            ];
+        }
+
 
         $this->load($params);
 
@@ -83,6 +101,8 @@ class TptkPageSearch extends TptkPage
             ->andFilterWhere(['ilike', 'line_cut', $this->line_cut])
             ->andFilterWhere(['ilike', 'char_cut', $this->char_cut])
             ->andFilterWhere(['ilike', 'remark', $this->remark]);
+
+        $query->andFilterWhere(['like', 'user.username', $this->user_name]);
 
         return $dataProvider;
     }

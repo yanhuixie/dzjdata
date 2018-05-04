@@ -131,7 +131,7 @@ class TptkAddThouCharController extends Controller
     {
         $searchModel = new TptkAddThouCharSearch();
         $conditions = Yii::$app->request->queryParams;
-        $conditions['TptkErrorCharTaskSearch']['user_id'] = Yii::$app->user->id;
+        $conditions['TptkAddThouCharSearch']['user_id'] = Yii::$app->user->id;
         $dataProvider = $searchModel->search($conditions);
 
         return $this->render('my-task', [

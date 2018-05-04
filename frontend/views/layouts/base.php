@@ -60,7 +60,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                     'items' => [
                         [
                             'label' => '阙疑文字校对',
-                            'visible' => !Yii::$app->user->isGuest,
+                            'visible' => Utils::hasRole('阙疑文字校对'),
                             'url' => ['tptk-error-char-task/my-check']
                         ],
                         [
@@ -86,21 +86,29 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                     'items' => [
                         [
                             'label' => '阙疑文字校对',
+                            'visible' => Utils::hasRole('阙疑文字校对'),
                             'url' => ['tptk-error-char-task/check']
                         ],
                         [
                             'label' => '阙疑文字审查',
+                            'visible' => Utils::hasRole('阙疑文字审查'),
                             'url' => ['tptk-error-char-task/confirm']
                         ],
                         [
+                            'label' => '千字文补录',
+                            'visible' => Utils::hasRole('千字文补录'),
+                            'url' => ['tptk-add-thou-char/task']
+                        ],
+                        [
                             'label' => '图文类型检查',
+                            'visible' => Utils::hasRole('图文类型检查'),
                             'url' => ['tptk-page/task']
                         ],
                     ]
                 ],
                 [
                     'label' => '数据管理',
-                    'visible' => Utils::hasRole('业务管理员'),
+                    'visible' => Utils::hasRole('数据管理员'),
                     'items' => [
                         [
                             'label' => '阙疑文字',

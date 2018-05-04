@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '领取用户',
                 'headerOptions' => ['style' => 'width:8%'],
-                'attribute' => 'user_id',
+                'attribute' => 'user_name',
                 'value' => 'user.username'
             ],
             [
@@ -62,6 +62,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     return TptkErrorCharTask::statuses()[$data['status']];
                 },
                 'filter' => TptkErrorCharTask::statuses()
+            ],
+            [
+                'label' => '备注',
+                'attribute' => 'tptk_remark',
+                'value' => 'tptkErrorChar.remark',
             ],
             [
                 'attribute' => 'assigned_at',

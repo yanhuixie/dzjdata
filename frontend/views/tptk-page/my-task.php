@@ -51,11 +51,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'page_type',
                 'headerOptions' => ['style' => 'width:8%'],
                 'value' => function ($data) {
-                    return TptkPage::pageTypes()[$data['page_type']];
+                    return $data['page_type'] ? TptkPage::pageTypes()[$data['page_type']] : '';
                 },
                 'filter' => TptkPage::pageTypes()
             ],
-            'remark',
             [
                 'attribute' => 'status',
                 'headerOptions' => ['style' => 'width:8%'],
@@ -64,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => TptkPage::statuses()
             ],
+            'remark',
             [
                 'attribute' => 'assigned_at',
                 'headerOptions' => ['style' => 'width:12%'],

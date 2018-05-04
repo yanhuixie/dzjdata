@@ -55,11 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => TptkPage::pageTypes()
             ],
-            'remark',
             [
                 'label' => '领取用户',
                 'headerOptions' => ['style' => 'width:8%'],
-                'attribute' => 'user_id',
+                'attribute' => 'user_name',
                 'value' => 'user.username'
             ],
             [
@@ -70,6 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => TptkPage::statuses()
             ],
+            'remark',
             [
                 'attribute' => 'assigned_at',
                 'headerOptions' => ['style' => 'width:12%'],

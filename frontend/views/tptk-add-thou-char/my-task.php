@@ -55,7 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => array(1 => '是', 0 => '否'),
             ],
-            'remark',
             [
                 'attribute' => 'status',
                 'headerOptions' => ['style' => 'width:8%'],
@@ -64,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => TptkAddThouChar::statuses()
             ],
+            'remark',
             [
                 'attribute' => 'assigned_at',
                 'headerOptions' => ['style' => 'width:12%'],

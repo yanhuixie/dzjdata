@@ -49,6 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'check_txt')->textInput(['maxlength' => true, 'readonly' => true]) ?>
             <?= $form->field($model, 'confirm_txt')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'if_doubt')->radioList([0 => '否', 1 => '是'], ['maxlength' => true, 'class' => $model->if_doubt ? 'doubt' : '']) ?>
+            <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
             <div class="form-group">
                 <?= Html::submitButton('提交', ['class' => 'btn btn-success']) ?>
             </div>
