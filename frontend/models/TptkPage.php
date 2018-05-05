@@ -38,11 +38,12 @@ class TptkPage extends \yii\db\ActiveRecord
     const SOURCE_500MulTptk = 7;    // 来源于多部藏经，500张图的图文标注数据
     const SOURCE_60HuaYan = 8;  // 来源于六十华严
 
-    // 图片类型：含特殊字符、含夹注小字、不含文本、标准图片
+    // 图片类型：含特殊字符、含夹注小字、不含文本、标准图片、其它类型
     const TYPE_SPECIAL_CHAR = 1;
     const TYPE_SMALL_NOTES = 2;
     const TYPE_NO_TEXT = 3;
     const TYPE_STANDARD_PIC = 4;
+    const TYPE_OTHER = 5;
 
     // 任务状态
     const STATUS_UNREADY = 0;
@@ -129,6 +130,7 @@ class TptkPage extends \yii\db\ActiveRecord
             self::TYPE_SPECIAL_CHAR => '含特殊文字',
             self::TYPE_SMALL_NOTES => '含夹注小字',
             self::TYPE_NO_TEXT => '不含文字',
+            self::TYPE_OTHER => '其它类型',
         ];
     }
 

@@ -132,7 +132,179 @@ class TptkPageController extends Controller
 //            closedir($dh);
 //        }
 
+        // 处理嘉兴藏夹注小字
+//        $ybDir = $dataDir . 'JX/txt/notes/';
+//        if ($dh = opendir($ybDir)) {
+//            while (($volume = readdir($dh)) !== false) {
+//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+//                    $inDh = opendir($ybDir . "/" . $volume);
+//                    while (($page = readdir($inDh)) !== false) {
+//                        if (!is_dir($ybDir . "/" . $page)) {
+//                            $model = new TptkPage();
+//                            $model->page_source = TptkPage::SOURCE_JX;
+//                            $model->page_code = str_replace('.txt', '', $page);
+//                            $model->status = 0;
+//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
+//                            $model->txt = 'JX/txt/notes/'.$volume.'/'.$model->page_code.'.txt';;
+//                            $model->page_type = TptkPage::TYPE_SMALL_NOTES;
+//                            $model->created_at = $t;
+//                            if (!$model->save()) {
+//                                echo $page . ': failed.';
+//                            }
+//                        }
+//                    }
+//                    closedir($inDh);
+//                }
+//
+//            }
+//            closedir($dh);
+//        }
+
+        // 处理嘉兴藏标准图片
+//        $ybDir = $dataDir . 'JX/txt/standard/';
+//        if ($dh = opendir($ybDir)) {
+//            while (($volume = readdir($dh)) !== false) {
+//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+//                    $inDh = opendir($ybDir . "/" . $volume);
+//                    while (($page = readdir($inDh)) !== false) {
+//                        if (!is_dir($ybDir . "/" . $page)) {
+//                            $model = new TptkPage();
+//                            $model->page_source = TptkPage::SOURCE_JX;
+//                            $model->page_code = str_replace('.txt', '', $page);
+//                            $model->status = 0;
+//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
+//                            $model->txt = 'JX/txt/standard/'.$volume.'/'.$model->page_code.'.txt';;
+//                            $model->page_type = TptkPage::TYPE_STANDARD_PIC;
+//                            $model->created_at = $t;
+//                            if (!$model->save()) {
+//                                echo $page . ': failed.';
+//                            }
+//                        }
+//                    }
+//                    closedir($inDh);
+//                }
+//            }
+//            closedir($dh);
+//        }
+//
+//        // 处理嘉兴藏其它
+//        $ybDir = $dataDir . 'JX/txt/other/';
+//        if ($dh = opendir($ybDir)) {
+//            while (($volume = readdir($dh)) !== false) {
+//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+//                    $inDh = opendir($ybDir . "/" . $volume);
+//                    while (($page = readdir($inDh)) !== false) {
+//                        if (!is_dir($ybDir . "/" . $page)) {
+//                            $model = new TptkPage();
+//                            $model->page_source = TptkPage::SOURCE_JX;
+//                            $model->page_code = str_replace('.txt', '', $page);
+//                            $model->status = 0;
+//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
+//                            $model->txt = 'JX/txt/other/'.$volume.'/'.$model->page_code.'.txt';;
+//                            $model->page_type = TptkPage::TYPE_OTHER;
+//                            $model->created_at = $t;
+//                            if (!$model->save()) {
+//                                echo $page . ': failed.';
+//                            }
+//                        }
+//                    }
+//                    closedir($inDh);
+//                }
+//            }
+//            closedir($dh);
+//        }
+
         echo 'generate success.';
+    }
+
+    /**
+     * 检查嘉兴藏
+     * Add.
+     */
+    public function actionCheckJx()
+    {
+        $dataDir = Yii::$app->basePath . '/../storage/web/source/dzjdata/';
+        $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
+
+        $notes = [];
+        $files = [];
+
+        $standards = [];
+
+        // 检查夹注小字，文本中应该有一行字数是超过19，否则可疑
+//        $ybDir = $dataDir . 'JX/txt/notes/';
+//        $idx = 1;
+//        if ($dh = opendir($ybDir)) {
+//            while (($volume = readdir($dh)) !== false) {
+//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+//                    $inDh = opendir($ybDir . "/" . $volume);
+//                    while (($page = readdir($inDh)) !== false) {
+//                        if (!is_dir($ybDir . "/" . $page)) {
+//                            $ifNotes = false;
+//                            $array = file($ybDir . "/" . $volume . '/' . $page);
+//                            foreach ($array as $item) {
+//                                if (mb_strlen($item, 'utf-8') > 19)
+//                                    $ifNotes = true;
+//                            }
+//                            // 如果所有行的字数都不超过14，则作为夹注小字来讲可疑
+//                            if (!$ifNotes) {
+//                                $notes[$idx]['image'] = 'http://storage.' . $hostInfo . '/source/dzjdata/JX/image/' . $volume . '/' . str_replace('.txt', '.jpg', $page);
+//                                $notes[$idx++]['txt'] = $array;
+//                            }
+//                        }
+//                    }
+//                    closedir($inDh);
+//                }
+//
+//            }
+//            closedir($dh);
+//        }
+
+        // 检查嘉兴藏标准图片，文本中所有行都不超过19，否则可疑
+        $ybDir = $dataDir . 'JX/txt/standard/';
+        $idx = 1;
+        if ($dh = opendir($ybDir)) {
+            while (($volume = readdir($dh)) !== false) {
+                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+                    $inDh = opendir($ybDir . "/" . $volume);
+                    while (($page = readdir($inDh)) !== false) {
+                        if (!is_dir($ybDir . "/" . $page)) {
+                            $ifStandard = true;
+                            $array = file($ybDir . "/" . $volume . '/' . $page);
+                            foreach ($array as $item) {
+                                $item = trim($item);
+                                $item = str_replace('。', '', $item);
+                                $item = str_replace('，', '', $item);
+                                $item = str_replace('?', '', $item);
+                                if (mb_strlen($item, 'utf-8') > 20) {
+                                    $ifStandard = false;
+                                    $notes[] = $volume . '/' . $page . ' : ' . mb_strlen($item, 'utf-8') . ' : ' . $item . "\r\n";
+                                }
+
+                            }
+                            // 如果所有行的字数都不超过19，则作为夹注小字来讲可疑
+                            if (!$ifStandard) {
+//                                $notes[$idx]['image'] = 'http://storage.' . $hostInfo . '/source/dzjdata/JX/image/' . $volume . '/' . str_replace('.txt', '.jpg', $page);
+//                                $notes[$idx++]['txt'] = $array;
+                                $files[] = $volume . '/' . $page. "\r\n";
+                            }
+
+                        }
+                    }
+                    closedir($inDh);
+                }
+            }
+            closedir($dh);
+        }
+        file_put_contents($dataDir . 'JX/standard-log-lines.txt', $notes);
+        file_put_contents($dataDir . 'JX/standard-log-files.txt', $files);
+        echo 'success!';
+        die;
+
+//        return $this->render('jx-check', [
+//            'notes' => $notes,
+//        ]);
+
     }
 
     /**
@@ -148,8 +320,15 @@ class TptkPageController extends Controller
         }
         $pageArr = explode('_', $model->page_code);
         $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
-        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
-        $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/txt/' . $pageArr[1] . '/' . $model->page_code . '.txt';
+        if (empty($model->image_path))
+            $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
+        else
+            $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->image_path;
+
+        if (empty($model->image_path))
+            $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/txt/' . $pageArr[1] . '/' . $model->page_code . '.txt';
+        else
+            $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->txt;
         $pageArray = file($txtUrlPath);
 
         return $this->render('navigate', [
@@ -206,6 +385,54 @@ class TptkPageController extends Controller
         return $this->render('check', [
             'model' => $model,
             'pageArray' => $pageArray
+        ]);
+    }
+
+
+    /**
+     * Add.
+     * 嘉兴藏浏览.
+     * @id 实体数据的id，嘉兴藏的偏移id
+     */
+    public function actionJx($id = null)
+    {
+        $model = TptkPage::find()->where(['page_source' => TptkPage::SOURCE_JX])->orderBy('id asc')->one();
+        if ($id) {
+            $model = $this->findModel($id + $model->id - 1);
+        }
+
+        if (empty($model->if_match)) {
+            $model->if_match = 1;
+        }
+
+        $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
+        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->image_path;
+        $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->txt;
+        $pageArray = file($txtUrlPath);
+
+        $pages = new Pagination([
+            'totalCount' => TptkPage::find()->where(['page_source' => TptkPage::SOURCE_JX])->orderBy('id asc')->count(),
+            'pageSize' => 1,
+            'pageParam' => 'id',
+            'pageSizeParam' => false,
+        ]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            // 保存当前记录
+            $model->status = TptkPage::STATUS_FINISHED;
+            $model->user_id = Yii::$app->user->id;
+            $model->completed_at = time();
+
+            if ($model->save()) {
+                // 获取下一条记录
+                return $this->redirect(['jx', 'id' => (int)$id + 1]);
+            }
+        }
+
+        return $this->render('jx', [
+            'model' => $model,
+            'pageArray' => $pageArray,
+            'pages' => $pages,
         ]);
     }
 
