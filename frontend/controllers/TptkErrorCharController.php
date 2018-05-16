@@ -155,7 +155,8 @@ class TptkErrorCharController extends Controller
         }
 
         $pageArr = explode('_', $model->page_code);
-        $model->imagePath = 'http://storage.dzjdata.locl/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
+        $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
+        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             // 保存当前记录

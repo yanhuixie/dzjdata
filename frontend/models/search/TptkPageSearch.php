@@ -82,7 +82,7 @@ class TptkPageSearch extends TptkPage
             'if_match' => $this->if_match,
             'page_type' => $this->page_type,
             'user_id' => $this->user_id,
-            'status' => $this->status,
+            'tptk_page.status' => $this->status,
             'created_at' => $this->created_at,
             'assigned_at' => $this->assigned_at,
             'completed_at' => $this->completed_at,

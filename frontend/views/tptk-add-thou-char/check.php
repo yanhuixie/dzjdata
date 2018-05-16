@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = '第' . $model->line_num . '行';
         </div>
 
         <div class="col-md-5">
-            <div style="font-size: 14px;">
+            <div style="font-size: 16px;">
                 <?php foreach ($pageArray as $item) {
                     echo $item . '<br/>';
                 } ?>

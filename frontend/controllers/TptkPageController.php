@@ -275,7 +275,7 @@ class TptkPageController extends Controller
                                 $item = trim($item);
                                 $item = str_replace('。', '', $item);
                                 $item = str_replace('，', '', $item);
-                                $item = str_replace('?', '', $item);
+//                                $item = str_replace('?', '', $item);
                                 if (mb_strlen($item, 'utf-8') > 20) {
                                     $ifStandard = false;
                                     $notes[] = $volume . '/' . $page . ' : ' . mb_strlen($item, 'utf-8') . ' : ' . $item . "\r\n";
@@ -286,7 +286,7 @@ class TptkPageController extends Controller
                             if (!$ifStandard) {
 //                                $notes[$idx]['image'] = 'http://storage.' . $hostInfo . '/source/dzjdata/JX/image/' . $volume . '/' . str_replace('.txt', '.jpg', $page);
 //                                $notes[$idx++]['txt'] = $array;
-                                $files[] = $volume . '/' . $page. "\r\n";
+                                $files[] = $volume . '/' . $page . "\r\n";
                             }
 
                         }
@@ -357,11 +357,15 @@ class TptkPageController extends Controller
         if (empty($model->page_type)) {
             $model->page_type = 4;
         }
+//        $model->page_type = TptkPage::TYPE_SMALL_NOTES;
 
         $pageArr = explode('_', $model->page_code);
         $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
-        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
-        $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/txt/' . $pageArr[1] . '/' . $model->page_code . '.txt';
+//        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
+//        $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/txt/' . $pageArr[1] . '/' . $model->page_code . '.txt';
+
+        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->image_path;
+        $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->txt;
         $pageArray = file($txtUrlPath);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -404,6 +408,7 @@ class TptkPageController extends Controller
         if (empty($model->if_match)) {
             $model->if_match = 1;
         }
+
 
         $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
         $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->image_path;
