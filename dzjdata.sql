@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS tptk_page (
   image_path varchar(64) DEFAULT NULL, -- '图片路径'
   txt text DEFAULT NULL, -- '文本'
   if_match smallint DEFAULT NULL, -- '图文是否匹配'
+  page_origin_type smallint DEFAULT NULL, -- '图片类型：含特殊字符、含夹注小字、不含文本、标准图片'
   page_type smallint DEFAULT NULL, -- '图片类型：含特殊字符、含夹注小字、不含文本、标准图片'
   frame_cut text DEFAULT NULL, -- '文字框切分信息'
   line_cut text DEFAULT NULL, -- '行切分信息'

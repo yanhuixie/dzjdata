@@ -85,7 +85,7 @@ class TptkPageController extends Controller
         $dataDir = Yii::$app->basePath . '/../storage/web/source/dzjdata/';
 
         // 处理永乐北藏，两次循环，向下处理两层目录
-//        $ybDir = $dataDir . 'YB/image/';
+//        $ybDir = $dataDir . 'YB/txt/';
 //        if ($dh = opendir($ybDir)) {
 //            while (($volume = readdir($dh)) !== false) {
 //                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
@@ -94,8 +94,7 @@ class TptkPageController extends Controller
 //                        if (!is_dir($ybDir . "/" . $page)) {
 //                            $model = new TptkPage();
 //                            $model->page_source = TptkPage::SOURCE_YB;
-//                            $model->page_code = str_replace('.jpg', '', $page);
-//                            $model->status = 1;
+//                            $model->page_code = str_replace('.txt', '', $page);
 //                            $model->created_at = $t;
 //                            if (!$model->save()) {
 //                                echo $page . ': failed.';
@@ -107,9 +106,9 @@ class TptkPageController extends Controller
 //            }
 //            closedir($dh);
 //        }
-
-        // 处理乾隆大藏经，两次循环，向下处理两层目录
-//        $ybDir = $dataDir . 'QL/image/';
+//        echo 'success yb!'; die;
+//        // 处理乾隆大藏经，两次循环，向下处理两层目录
+//        $ybDir = $dataDir . 'QL/txt/';
 //        if ($dh = opendir($ybDir)) {
 //            while (($volume = readdir($dh)) !== false) {
 //                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
@@ -118,8 +117,7 @@ class TptkPageController extends Controller
 //                        if (!is_dir($ybDir . "/" . $page)) {
 //                            $model = new TptkPage();
 //                            $model->page_source = TptkPage::SOURCE_QL;
-//                            $model->page_code = str_replace('.jpg', '', $page);
-//                            $model->status = 1;
+//                            $model->page_code = str_replace('.txt', '', $page);
 //                            $model->created_at = $t;
 //                            if (!$model->save()) {
 //                                echo $page . ': failed.';
@@ -131,65 +129,11 @@ class TptkPageController extends Controller
 //            }
 //            closedir($dh);
 //        }
+//
+//        echo 'success ql!'; die;
 
         // 处理嘉兴藏标准图片
-//        $ybDir = $dataDir . 'JX/txt/standard/';
-//        if ($dh = opendir($ybDir)) {
-//            while (($volume = readdir($dh)) !== false) {
-//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
-//                    $inDh = opendir($ybDir . "/" . $volume);
-//                    while (($page = readdir($inDh)) !== false) {
-//                        if (!is_dir($ybDir . "/" . $page)) {
-//                            $model = new TptkPage();
-//                            $model->page_source = TptkPage::SOURCE_JX;
-//                            $model->page_code = str_replace('.txt', '', $page);
-//                            $model->status = 0;
-//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
-//                            $model->txt = 'JX/txt/standard/'.$volume.'/'.$model->page_code.'.txt';;
-//                            $model->page_type = TptkPage::TYPE_STANDARD_PIC;
-//                            $model->created_at = $t;
-//                            if (!$model->save()) {
-//                                echo $page . ': failed.';
-//                            }
-//                        }
-//                    }
-//                    closedir($inDh);
-//                }
-//            }
-//            closedir($dh);
-//        }
-
-        // 处理嘉兴藏夹注小字
-//        $ybDir = $dataDir . 'JX/txt/notes/';
-//        if ($dh = opendir($ybDir)) {
-//            while (($volume = readdir($dh)) !== false) {
-//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
-//                    $inDh = opendir($ybDir . "/" . $volume);
-//                    while (($page = readdir($inDh)) !== false) {
-//                        if (!is_dir($ybDir . "/" . $page)) {
-//                            $model = new TptkPage();
-//                            $model->page_source = TptkPage::SOURCE_JX;
-//                            $model->page_code = str_replace('.txt', '', $page);
-//                            $model->status = 0;
-//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
-//                            $model->txt = 'JX/txt/notes/'.$volume.'/'.$model->page_code.'.txt';;
-//                            $model->page_type = TptkPage::TYPE_SMALL_NOTES;
-//                            $model->created_at = $t;
-//                            if (!$model->save()) {
-//                                echo $page . ': failed.';
-//                            }
-//                        }
-//                    }
-//                    closedir($inDh);
-//                }
-//
-//            }
-//            closedir($dh);
-//        }
-
-//
-//        // 处理嘉兴藏
-        $ybDir = $dataDir . 'JX/txt/empty/';
+        $ybDir = $dataDir . 'JX/txt/standard/';
         if ($dh = opendir($ybDir)) {
             while (($volume = readdir($dh)) !== false) {
                 if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
@@ -200,9 +144,9 @@ class TptkPageController extends Controller
                             $model->page_source = TptkPage::SOURCE_JX;
                             $model->page_code = str_replace('.txt', '', $page);
                             $model->status = 0;
-                            $model->image_path = 'JX/image/' . $volume . '/' . $model->page_code . '.jpg';
-                            $model->txt = 'JX/txt/empty/' . $volume . '/' . $model->page_code . '.txt';;
-                            $model->page_type = TptkPage::TYPE_NO_TEXT;
+                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
+                            $model->txt = 'JX/txt/standard/'.$volume.'/'.$model->page_code.'.txt';;
+                            $model->page_type = TptkPage::TYPE_STANDARD_PIC;
                             $model->created_at = $t;
                             if (!$model->save()) {
                                 echo $page . ': failed.';
@@ -214,6 +158,60 @@ class TptkPageController extends Controller
             }
             closedir($dh);
         }
+        // 处理嘉兴藏夹注小字
+        $ybDir = $dataDir . 'JX/txt/notes/';
+        if ($dh = opendir($ybDir)) {
+            while (($volume = readdir($dh)) !== false) {
+                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+                    $inDh = opendir($ybDir . "/" . $volume);
+                    while (($page = readdir($inDh)) !== false) {
+                        if (!is_dir($ybDir . "/" . $page)) {
+                            $model = new TptkPage();
+                            $model->page_source = TptkPage::SOURCE_JX;
+                            $model->page_code = str_replace('.txt', '', $page);
+                            $model->status = 0;
+                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
+                            $model->txt = 'JX/txt/notes/'.$volume.'/'.$model->page_code.'.txt';;
+                            $model->page_type = TptkPage::TYPE_SMALL_NOTES;
+                            $model->created_at = $t;
+                            if (!$model->save()) {
+                                echo $page . ': failed.';
+                            }
+                        }
+                    }
+                    closedir($inDh);
+                }
+
+            }
+            closedir($dh);
+        }
+
+//        // 处理嘉兴藏
+//        $ybDir = $dataDir . 'JX/txt/empty/';
+//        if ($dh = opendir($ybDir)) {
+//            while (($volume = readdir($dh)) !== false) {
+//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+//                    $inDh = opendir($ybDir . "/" . $volume);
+//                    while (($page = readdir($inDh)) !== false) {
+//                        if (!is_dir($ybDir . "/" . $page)) {
+//                            $model = new TptkPage();
+//                            $model->page_source = TptkPage::SOURCE_JX;
+//                            $model->page_code = str_replace('.txt', '', $page);
+//                            $model->status = 0;
+//                            $model->image_path = 'JX/image/' . $volume . '/' . $model->page_code . '.jpg';
+//                            $model->txt = 'JX/txt/empty/' . $volume . '/' . $model->page_code . '.txt';;
+//                            $model->page_type = TptkPage::TYPE_NO_TEXT;
+//                            $model->created_at = $t;
+//                            if (!$model->save()) {
+//                                echo $page . ': failed.';
+//                            }
+//                        }
+//                    }
+//                    closedir($inDh);
+//                }
+//            }
+//            closedir($dh);
+//        }
 
         echo 'generate success.';
     }

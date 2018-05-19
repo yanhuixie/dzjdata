@@ -66,6 +66,7 @@ return [
     'Page not found' => '页面没找到',
     'Page Source' => '图片来源',
     'Page Type' => '图片类型',
+    'Page Origin Type' => '图片初始类型',
     'Password' => '密码',
     'Password reset for {name}' => '为{name}重置密码',
     'Profile settings' => '资料设置',

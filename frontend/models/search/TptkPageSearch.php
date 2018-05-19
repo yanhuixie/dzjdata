@@ -19,7 +19,7 @@ class TptkPageSearch extends TptkPage
     public function rules()
     {
         return [
-            [['id', 'page_source', 'if_match', 'page_type', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
+            [['id', 'page_source', 'if_match', 'page_type', 'page_origin_type', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
             [['page_code', 'image_path', 'txt', 'frame_cut', 'line_cut', 'char_cut', 'remark', 'user_name'], 'safe'],
         ];
     }
@@ -81,6 +81,7 @@ class TptkPageSearch extends TptkPage
             'id' => $this->id,
             'if_match' => $this->if_match,
             'page_type' => $this->page_type,
+            'page_origin_type' => $this->page_origin_type,
             'user_id' => $this->user_id,
             'tptk_page.status' => $this->status,
             'created_at' => $this->created_at,

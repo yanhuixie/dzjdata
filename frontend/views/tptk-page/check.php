@@ -38,9 +38,18 @@ $this->params['breadcrumbs'][] = $model->page_code;
 
         <div class="col-md-5">
             <div style="font-size: 14px;">
-                <?php foreach ($pageArray as $item) {
-                    echo $item . '<br/>';
-                } ?>
+                <?php
+                mb_regex_encoding('utf-8');
+                $idx = 1;
+                foreach ($pageArray as $item) {
+                    if ($idx == 1 || $idx == count($pageArray)) {
+                        echo '<span style="color: red; font-size: 20px;">' . mb_substr($item, 0, 1) . '</span>' . mb_substr($item, 1) . '<br/>';
+                    } else {
+                        echo $item . '<br/>';
+                    }
+                    $idx++;
+                }
+                ?>
             </div>
             <hr/>
             <?php $form = ActiveForm::begin(); ?>
@@ -54,7 +63,7 @@ $this->params['breadcrumbs'][] = $model->page_code;
             <hr/>
             <div>
                 <p>【帮助】</p>
-                <p>1. 图文是否匹配：只需要检查第一行和最后一行第一个字即可；</p>
+                <p>1. 图文是否匹配：检查第一行和最后一行第一个标红的字即可；</p>
                 <p>2. 图片类型：</p>
                 <p>&nbsp;&nbsp;2.1 标准图片：文字比较规范，包含文字但是不包含夹注小字、特殊文字的图片； </p>
                 <p>&nbsp;&nbsp;2.2 含夹注小字：包含夹注小字的图片； </p>

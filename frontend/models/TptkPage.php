@@ -67,8 +67,8 @@ class TptkPage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['page_source', 'if_match', 'page_type', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'default', 'value' => null],
-            [['page_source', 'if_match', 'page_type', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
+            [['page_source', 'if_match', 'page_type', 'page_origin_type', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'default', 'value' => null],
+            [['page_source', 'if_match', 'page_type', 'page_origin_type', 'user_id', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
             [['txt', 'frame_cut', 'line_cut', 'char_cut'], 'string'],
             [['created_at'], 'required'],
             [['page_code'], 'string', 'max' => 16],
@@ -89,6 +89,7 @@ class TptkPage extends \yii\db\ActiveRecord
             'image_path' => Yii::t('frontend', 'Image Path'),
             'txt' => Yii::t('frontend', 'Txt'),
             'if_match' => Yii::t('frontend', 'If Match'),
+            'page_origin_type' => Yii::t('frontend', 'Page Origin Type'),
             'page_type' => Yii::t('frontend', 'Page Type'),
             'frame_cut' => Yii::t('frontend', 'Frame Cut'),
             'line_cut' => Yii::t('frontend', 'Line Cut'),
