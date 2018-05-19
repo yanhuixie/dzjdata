@@ -35,13 +35,13 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                     'url' => ['/tptk-error-char/confirm']
                 ],
                 [
-                    'label' => Yii::t('frontend', '千字文补录'),
-                    'visible' => Utils::hasRole('千字文补录'),
+                    'label' => Yii::t('frontend', '千字文补录检查'),
+                    'visible' => !Yii::$app->user->isGuest,
                     'url' => ['/tptk-add-thou-char/check']
                 ],
                 [
                     'label' => Yii::t('frontend', '图文类型检查'),
-                    'visible' => Utils::hasRole('图文类型检查'),
+                    'visible' => !Yii::$app->user->isGuest,
                     'url' => ['/tptk-page/check']
                 ],
                 [
@@ -70,12 +70,10 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                         ],
                         [
                             'label' => '千字文补录',
-                            'visible' => Utils::hasRole('千字文补录'),
                             'url' => ['tptk-add-thou-char/my-task']
                         ],
                         [
                             'label' => '图文类型检查',
-                            'visible' => Utils::hasRole('图文类型检查'),
                             'url' => ['tptk-page/my-task']
                         ],
                     ]

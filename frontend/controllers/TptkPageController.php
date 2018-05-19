@@ -132,6 +132,33 @@ class TptkPageController extends Controller
 //            closedir($dh);
 //        }
 
+        // 处理嘉兴藏标准图片
+//        $ybDir = $dataDir . 'JX/txt/standard/';
+//        if ($dh = opendir($ybDir)) {
+//            while (($volume = readdir($dh)) !== false) {
+//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+//                    $inDh = opendir($ybDir . "/" . $volume);
+//                    while (($page = readdir($inDh)) !== false) {
+//                        if (!is_dir($ybDir . "/" . $page)) {
+//                            $model = new TptkPage();
+//                            $model->page_source = TptkPage::SOURCE_JX;
+//                            $model->page_code = str_replace('.txt', '', $page);
+//                            $model->status = 0;
+//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
+//                            $model->txt = 'JX/txt/standard/'.$volume.'/'.$model->page_code.'.txt';;
+//                            $model->page_type = TptkPage::TYPE_STANDARD_PIC;
+//                            $model->created_at = $t;
+//                            if (!$model->save()) {
+//                                echo $page . ': failed.';
+//                            }
+//                        }
+//                    }
+//                    closedir($inDh);
+//                }
+//            }
+//            closedir($dh);
+//        }
+
         // 处理嘉兴藏夹注小字
 //        $ybDir = $dataDir . 'JX/txt/notes/';
 //        if ($dh = opendir($ybDir)) {
@@ -160,78 +187,55 @@ class TptkPageController extends Controller
 //            closedir($dh);
 //        }
 
-        // 处理嘉兴藏标准图片
-//        $ybDir = $dataDir . 'JX/txt/standard/';
-//        if ($dh = opendir($ybDir)) {
-//            while (($volume = readdir($dh)) !== false) {
-//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
-//                    $inDh = opendir($ybDir . "/" . $volume);
-//                    while (($page = readdir($inDh)) !== false) {
-//                        if (!is_dir($ybDir . "/" . $page)) {
-//                            $model = new TptkPage();
-//                            $model->page_source = TptkPage::SOURCE_JX;
-//                            $model->page_code = str_replace('.txt', '', $page);
-//                            $model->status = 0;
-//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
-//                            $model->txt = 'JX/txt/standard/'.$volume.'/'.$model->page_code.'.txt';;
-//                            $model->page_type = TptkPage::TYPE_STANDARD_PIC;
-//                            $model->created_at = $t;
-//                            if (!$model->save()) {
-//                                echo $page . ': failed.';
-//                            }
-//                        }
-//                    }
-//                    closedir($inDh);
-//                }
-//            }
-//            closedir($dh);
-//        }
 //
-//        // 处理嘉兴藏其它
-//        $ybDir = $dataDir . 'JX/txt/other/';
-//        if ($dh = opendir($ybDir)) {
-//            while (($volume = readdir($dh)) !== false) {
-//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
-//                    $inDh = opendir($ybDir . "/" . $volume);
-//                    while (($page = readdir($inDh)) !== false) {
-//                        if (!is_dir($ybDir . "/" . $page)) {
-//                            $model = new TptkPage();
-//                            $model->page_source = TptkPage::SOURCE_JX;
-//                            $model->page_code = str_replace('.txt', '', $page);
-//                            $model->status = 0;
-//                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
-//                            $model->txt = 'JX/txt/other/'.$volume.'/'.$model->page_code.'.txt';;
-//                            $model->page_type = TptkPage::TYPE_OTHER;
-//                            $model->created_at = $t;
-//                            if (!$model->save()) {
-//                                echo $page . ': failed.';
-//                            }
-//                        }
-//                    }
-//                    closedir($inDh);
-//                }
-//            }
-//            closedir($dh);
-//        }
+//        // 处理嘉兴藏
+        $ybDir = $dataDir . 'JX/txt/empty/';
+        if ($dh = opendir($ybDir)) {
+            while (($volume = readdir($dh)) !== false) {
+                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+                    $inDh = opendir($ybDir . "/" . $volume);
+                    while (($page = readdir($inDh)) !== false) {
+                        if (!is_dir($ybDir . "/" . $page)) {
+                            $model = new TptkPage();
+                            $model->page_source = TptkPage::SOURCE_JX;
+                            $model->page_code = str_replace('.txt', '', $page);
+                            $model->status = 0;
+                            $model->image_path = 'JX/image/' . $volume . '/' . $model->page_code . '.jpg';
+                            $model->txt = 'JX/txt/empty/' . $volume . '/' . $model->page_code . '.txt';;
+                            $model->page_type = TptkPage::TYPE_NO_TEXT;
+                            $model->created_at = $t;
+                            if (!$model->save()) {
+                                echo $page . ': failed.';
+                            }
+                        }
+                    }
+                    closedir($inDh);
+                }
+            }
+            closedir($dh);
+        }
 
         echo 'generate success.';
     }
 
-    /**
-     * 检查嘉兴藏
-     * Add.
-     */
-    public function actionCheckJx()
-    {
-        $dataDir = Yii::$app->basePath . '/../storage/web/source/dzjdata/';
-        $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
 
-        $notes = [];
-        $files = [];
 
-        $standards = [];
-
-        // 检查夹注小字，文本中应该有一行字数是超过19，否则可疑
+//    /**
+//     * 检查嘉兴藏
+//     * Add.
+//     */
+//    public function actionCheckJx()
+//    {
+//        $dataDir = Yii::$app->basePath . '/../storage/web/source/dzjdata/';
+//        $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
+//
+//
+//        mb_regex_encoding('utf-8');
+//        $notes = [];
+//        $files = [];
+//
+//        $standards = [];
+    // 检查夹注小字，文本中应该有一行字数是超过19，否则可疑
 //        $ybDir = $dataDir . 'JX/txt/notes/';
 //        $idx = 1;
 //        if ($dh = opendir($ybDir)) {
@@ -259,53 +263,51 @@ class TptkPageController extends Controller
 //            }
 //            closedir($dh);
 //        }
-
-        // 检查嘉兴藏标准图片，文本中所有行都不超过19，否则可疑
-        $ybDir = $dataDir . 'JX/txt/standard/';
-        $idx = 1;
-        if ($dh = opendir($ybDir)) {
-            while (($volume = readdir($dh)) !== false) {
-                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
-                    $inDh = opendir($ybDir . "/" . $volume);
-                    while (($page = readdir($inDh)) !== false) {
-                        if (!is_dir($ybDir . "/" . $page)) {
-                            $ifStandard = true;
-                            $array = file($ybDir . "/" . $volume . '/' . $page);
-                            foreach ($array as $item) {
-                                $item = trim($item);
-                                $item = str_replace('。', '', $item);
-                                $item = str_replace('，', '', $item);
-//                                $item = str_replace('?', '', $item);
-                                if (mb_strlen($item, 'utf-8') > 20) {
-                                    $ifStandard = false;
-                                    $notes[] = $volume . '/' . $page . ' : ' . mb_strlen($item, 'utf-8') . ' : ' . $item . "\r\n";
-                                }
-
-                            }
-                            // 如果所有行的字数都不超过19，则作为夹注小字来讲可疑
-                            if (!$ifStandard) {
-//                                $notes[$idx]['image'] = 'http://storage.' . $hostInfo . '/source/dzjdata/JX/image/' . $volume . '/' . str_replace('.txt', '.jpg', $page);
-//                                $notes[$idx++]['txt'] = $array;
-                                $files[] = $volume . '/' . $page . "\r\n";
-                            }
-
-                        }
-                    }
-                    closedir($inDh);
-                }
-            }
-            closedir($dh);
-        }
-        file_put_contents($dataDir . 'JX/standard-log-lines.txt', $notes);
-        file_put_contents($dataDir . 'JX/standard-log-files.txt', $files);
-        echo 'success!';
-        die;
-
+//
+//        // 检查嘉兴藏标准图片，文本中所有行都不超过19，否则可疑
+//        $ybDir = $dataDir . 'JX/txt/standard/';
+//        $idx = 1;
+//        if ($dh = opendir($ybDir)) {
+//            while (($volume = readdir($dh)) !== false) {
+//                if (is_dir($ybDir . "/" . $volume) && $volume != "." && $volume != "..") {
+//                    $inDh = opendir($ybDir . "/" . $volume);
+//                    while (($page = readdir($inDh)) !== false) {
+//                        if (!is_dir($ybDir . "/" . $page)) {
+//                            $ifStandard = true;
+//                            $array = file($ybDir . "/" . $volume . '/' . $page);
+//                            foreach ($array as $item) {
+//                                $item = trim($item);
+//                                $item = mb_ereg_replace("[：？。，、；！『』「」《》]", '', $item, "UTF-8");
+////                                $item = str_replace('?', '', $item);
+//                                if (mb_strlen($item, 'utf-8') > 20) {
+//                                    $ifStandard = false;
+//                                    $notes[] = $volume . '/' . $page . ' : ' . mb_strlen($item, 'utf-8') . ' : ' . $item . "\r\n";
+//                                }
+//
+//                            }
+//                            // 如果所有行的字数都不超过19，则作为夹注小字来讲可疑
+//                            if (!$ifStandard) {
+////                                $notes[$idx]['image'] = 'http://storage.' . $hostInfo . '/source/dzjdata/JX/image/' . $volume . '/' . str_replace('.txt', '.jpg', $page);
+////                                $notes[$idx++]['txt'] = $array;
+//                                $files[] = $volume . '/' . $page . "\r\n";
+//                            }
+//
+//                        }
+//                    }
+//                    closedir($inDh);
+//                }
+//            }
+//            closedir($dh);
+//        }
+//        file_put_contents($dataDir . 'JX/standard-log-lines.txt', $notes);
+//        file_put_contents($dataDir . 'JX/standard-log-files.txt', $files);
+//        echo 'success!';
+//        die;
 //        return $this->render('jx-check', [
 //            'notes' => $notes,
 //        ]);
-
-    }
+//
+//    }
 
     /**
      * Add.
@@ -347,7 +349,10 @@ class TptkPageController extends Controller
     {
         if (!$id) {
             $nextTask = TptkPage::getNextTodoTask();
-            return $this->redirect(['check', 'id' => $nextTask->id]);
+            if ($nextTask)
+                return $this->redirect(['check', 'id' => $nextTask->id]);
+            else
+                return $this->redirect(['site/error', 'message' => '任务已领取完毕！']);
         }
 
         $model = $this->findModel($id);
@@ -357,13 +362,8 @@ class TptkPageController extends Controller
         if (empty($model->page_type)) {
             $model->page_type = 4;
         }
-//        $model->page_type = TptkPage::TYPE_SMALL_NOTES;
 
-        $pageArr = explode('_', $model->page_code);
         $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
-//        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
-//        $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/txt/' . $pageArr[1] . '/' . $model->page_code . '.txt';
-
         $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->image_path;
         $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->txt;
         $pageArray = file($txtUrlPath);

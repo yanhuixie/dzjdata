@@ -17,8 +17,10 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
     public $tptk_line_txt;
     public $tptk_check_txt;
     public $tptk_confirm_txt;
+    public $tptk_if_doubt;
     public $tptk_remark;
     public $user_name;
+
 
     /**
      * @inheritdoc
@@ -27,7 +29,7 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
     {
         return [
             [['id', 'tptk_error_char_id', 'user_id', 'task_type', 'status', 'created_at', 'assigned_at', 'completed_at'], 'integer'],
-            [['tptk_page_code', 'tptk_line_num', 'tptk_line_txt', 'tptk_check_txt', 'tptk_confirm_txt', 'tptk_remark', 'user_name'], 'safe']
+            [['tptk_page_code', 'tptk_line_num', 'tptk_line_txt', 'tptk_check_txt', 'tptk_confirm_txt', 'tptk_if_doubt', 'tptk_remark', 'user_name'], 'safe']
         ];
     }
 
@@ -58,7 +60,7 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_ASC]]
+            'sort' => ['defaultOrder' => ['id' => SORT_ASC]]
         ]);
 
         // 添加额外的类属性
@@ -68,6 +70,7 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
             'tptk_line_txt' => 'tptk_error_char.line_txt',
             'tptk_check_txt' => 'tptk_error_char.check_txt',
             'tptk_confirm_txt' => 'tptk_error_char.confirm_txt',
+            'tptk_if_doubt' => 'tptk_error_char.if_doubt',
             'tptk_remark' => 'tptk_error_char.remark',
             'user_name' => 'user.username'
         ];
@@ -79,7 +82,6 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
                 'label' => $this->getAttributeLabel($addSortAttribute),
             ];
         }
-
 
 
         $this->load($params);
@@ -102,6 +104,7 @@ class TptkErrorCharTaskSearch extends TptkErrorCharTask
             'completed_at' => $this->completed_at,
         ]);
 
+        $query->andFilterWhere(['tptk_error_char.if_doubt' => $this->tptk_if_doubt]);
         $query->andFilterWhere(['tptk_error_char.line_num' => $this->tptk_line_num]);
         $query->andFilterWhere(['like', 'tptk_error_char.page_code', $this->tptk_page_code]);
         $query->andFilterWhere(['like', 'tptk_error_char.line_txt', $this->tptk_line_txt]);

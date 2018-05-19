@@ -50,10 +50,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'tptkErrorChar.check_txt',
             ],
             [
-                'label' => '领取用户',
-                'headerOptions' => ['style' => 'width:8%'],
-                'attribute' => 'user_name',
-                'value' => 'user.username'
+                'label' => '是否存疑',
+                'attribute' => 'tptk_if_doubt',
+                'value' => function ($data) {
+                    return [0 => '否', 1 => '是', null => ''][$data->tptkErrorChar->if_doubt];
+                },
+                'filter' => [0 => '否', 1 => '是']
             ],
             [
                 'attribute' => 'status',
@@ -67,6 +69,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '备注',
                 'attribute' => 'tptk_remark',
                 'value' => 'tptkErrorChar.remark',
+            ],
+            [
+                'label' => '领取用户',
+                'headerOptions' => ['style' => 'width:8%'],
+                'attribute' => 'user_name',
+                'value' => 'user.username'
             ],
             [
                 'attribute' => 'assigned_at',

@@ -127,7 +127,7 @@ class TptkPage extends \yii\db\ActiveRecord
     {
         return [
             self::TYPE_STANDARD_PIC => '标准图片',
-            self::TYPE_SPECIAL_CHAR => '含特殊文字',
+//            self::TYPE_SPECIAL_CHAR => '含特殊文字',
             self::TYPE_SMALL_NOTES => '含夹注小字',
             self::TYPE_NO_TEXT => '不含文字',
             self::TYPE_OTHER => '其它类型',

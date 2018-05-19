@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $model->page_code;
     <div class="tptk-add-thou-char-update">
 
 
-        <div class="col-md-7" style="overflow:auto; height: 800px;">
+        <div class="col-md-7" style="overflow:auto; height: 1000px;">
             <div class="control-button">
                 <button class="btn btn-default glyphicon glyphicon-zoom-in"
                         onclick="changeSize('image-page','+');"></button>
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $model->page_code;
         </div>
 
         <div class="col-md-5">
-            <div style="font-size: 16px;">
+            <div style="font-size: 14px;">
                 <?php foreach ($pageArray as $item) {
                     echo $item . '<br/>';
                 } ?>
@@ -46,11 +46,21 @@ $this->params['breadcrumbs'][] = $model->page_code;
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->field($model, 'if_match')->radioList([1 => '是', 0 => '否'], ['maxlength' => true]) ?>
             <?= $form->field($model, 'page_type')->radioList(TptkPage::pageTypes(), ['maxlength' => true]) ?>
-            <?= $form->field($model, 'remark')->textInput(['maxlength' => true, 'style'=>'width:80%']) ?>
+            <?= $form->field($model, 'remark')->textInput(['maxlength' => true, 'style' => 'width:80%']) ?>
             <div class="form-group">
                 <?= Html::submitButton('提交', ['class' => 'btn btn-success']) ?>
             </div>
             <?php ActiveForm::end(); ?>
+            <hr/>
+            <div>
+                <p>【帮助】</p>
+                <p>1. 图文是否匹配：只需要检查第一行和最后一行第一个字即可；</p>
+                <p>2. 图片类型：</p>
+                <p>&nbsp;&nbsp;2.1 标准图片：文字比较规范，包含文字但是不包含夹注小字、特殊文字的图片； </p>
+                <p>&nbsp;&nbsp;2.2 含夹注小字：包含夹注小字的图片； </p>
+                <p>&nbsp;&nbsp;2.3 不含文字：不包含文字的图片； </p>
+                <p>&nbsp;&nbsp;2.4 其它类型：非以上三种情况的类型，比如包含特殊字符。 </p>
+            </div>
         </div>
 
     </div>
