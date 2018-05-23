@@ -81,6 +81,15 @@ $script = <<<SCRIPT
         obj.style.width=parseInt(obj.style.width)+(action=='+'?+10:-10)+'%';
     }
 
+    function show(event) {  
+        var ev = event || window.event;  
+        //回车键对应的ASCII是13 
+        if (ev.keyCode == 13 ) {  
+            document.getElementById("w0").submit();
+        }  
+    }  
+    //键盘按下事件  
+    document.onkeydown = show; 
 
 SCRIPT;
 
