@@ -11,6 +11,6 @@ use yii\widgets\ActiveForm;
 
     <div class="tptk-error-char-view" style="text-align: center">
 
-        <h3>对不起，查无任务。</h3>
+        <h3>您好！查无任务，任务应已全部完成。</h3>
 
     </div>

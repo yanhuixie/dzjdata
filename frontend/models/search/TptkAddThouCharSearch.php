@@ -82,7 +82,7 @@ class TptkAddThouCharSearch extends TptkAddThouChar
             'line_num' => $this->line_num,
             'is_right' => $this->is_right,
             'user_id' => $this->user_id,
-            'status' => $this->status,
+            'tptk_add_thou_char.status' => $this->status,
             'created_at' => $this->created_at,
             'assigned_at' => $this->assigned_at,
             'completed_at' => $this->completed_at,

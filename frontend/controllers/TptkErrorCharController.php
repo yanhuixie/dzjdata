@@ -31,7 +31,6 @@ class TptkErrorCharController extends Controller
     }
 
 
-
     /**
      * Displays a single TptkErrorChar model.
      * @param string $id
@@ -86,7 +85,10 @@ class TptkErrorCharController extends Controller
     {
         if (!$id) {
             $nextTask = TptkErrorCharTask::getNextTodoTask(TptkErrorCharTask::TYPE_CHECK);
-            return $this->redirect(['check', 'id' => $nextTask->tptk_error_char_id]);
+            if ($nextTask)
+                return $this->redirect(['check', 'id' => $nextTask->tptk_error_char_id]);
+            else
+                return $this->redirect(['no-task']);
         }
 
         $model = $this->findModel($id);

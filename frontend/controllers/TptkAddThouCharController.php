@@ -88,7 +88,7 @@ class TptkAddThouCharController extends Controller
             $model->user_id = Yii::$app->user->id;
             $model->completed_at = time();
 
-            if($model->save()) {
+            if ($model->save()) {
                 // 跳转
                 if ($update) {
                     return $this->redirect(['view', 'id' => $id]);
@@ -104,6 +104,39 @@ class TptkAddThouCharController extends Controller
             'model' => $model,
             'pageArray' => $pageArray
         ]);
+    }
+
+
+    /**
+     * Add.
+     * 千字文补录.
+     * @id 实体数据的id
+     */
+    public function actionCheckTask()
+    {
+        include 'AddThouChar.php';
+
+        $storageDir = 'D:/Projects/dzjdata/storage/web/source/dzjdata/';
+        $fileNotExist = [];
+        // 检查每个model对应的图片和文件是否存在
+        foreach ($page_codes as $page_code) {
+            $image_path = $storageDir .explode('_', $page_code)[0] .  '/image/' . explode('_', $page_code)[1] . '/' . $page_code . '.jpg';
+            $txt_path = $storageDir . explode('_', $page_code)[0] . '/txt/' . explode('_', $page_code)[1] . '/' . $page_code . '.txt';
+            if (!file_exists($image_path)) {
+                $fileNotExist[] = $page_code;
+            } elseif (!file_exists($txt_path)) {
+                $fileNotExist[] = $page_code;
+            }
+        }
+
+        foreach (array_unique($fileNotExist) as $item) {
+            echo $item . '<br/>';
+        }
+
+        echo 'Done!';
+        die;
+
+
     }
 
     /**
