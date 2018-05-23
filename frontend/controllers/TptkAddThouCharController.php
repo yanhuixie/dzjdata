@@ -78,7 +78,7 @@ class TptkAddThouCharController extends Controller
 
         $pageArr = explode('_', $model->page_code);
         $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
-        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/image/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
+        $model->imagePath = 'https://s3.cn-north-1.amazonaws.com.cn/lqdzj-image/' . $pageArr[0] . '/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
         $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $pageArr[0] . '/txt/' . $pageArr[1] . '/' . $model->page_code . '.txt';
         $pageArray = file($txtUrlPath);
 
