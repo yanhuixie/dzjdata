@@ -144,8 +144,8 @@ class TptkPageController extends Controller
                             $model->page_source = TptkPage::SOURCE_JX;
                             $model->page_code = str_replace('.txt', '', $page);
                             $model->status = 0;
-                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
-                            $model->txt = 'JX/txt/standard/'.$volume.'/'.$model->page_code.'.txt';;
+                            $model->image_path = 'JX/image/' . $volume . '/' . $model->page_code . '.jpg';
+                            $model->txt = 'JX/txt/standard/' . $volume . '/' . $model->page_code . '.txt';;
                             $model->page_type = TptkPage::TYPE_STANDARD_PIC;
                             $model->created_at = $t;
                             if (!$model->save()) {
@@ -170,8 +170,8 @@ class TptkPageController extends Controller
                             $model->page_source = TptkPage::SOURCE_JX;
                             $model->page_code = str_replace('.txt', '', $page);
                             $model->status = 0;
-                            $model->image_path = 'JX/image/'.$volume.'/'.$model->page_code.'.jpg';
-                            $model->txt = 'JX/txt/notes/'.$volume.'/'.$model->page_code.'.txt';;
+                            $model->image_path = 'JX/image/' . $volume . '/' . $model->page_code . '.jpg';
+                            $model->txt = 'JX/txt/notes/' . $volume . '/' . $model->page_code . '.txt';;
                             $model->page_type = TptkPage::TYPE_SMALL_NOTES;
                             $model->created_at = $t;
                             if (!$model->save()) {
@@ -362,7 +362,11 @@ class TptkPageController extends Controller
         }
 
         $hostInfo = str_replace('http://', '', Yii::$app->request->getHostInfo());
-        $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->image_path;
+        $pageArr = explode('_', $model->page_code);
+        if ($pageArr[0] == 'YB' || $pageArr[0] == 'QL')
+            $model->imagePath = 'https://s3.cn-north-1.amazonaws.com.cn/lqdzj-image/' . $pageArr[0] . '/' . $pageArr[1] . '/' . $model->page_code . '.jpg';
+        else
+            $model->imagePath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->image_path;
         $txtUrlPath = 'http://storage.' . $hostInfo . '/source/dzjdata/' . $model->txt;
         $pageArray = file($txtUrlPath);
 
