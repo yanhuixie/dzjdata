@@ -190,6 +190,29 @@ class TptkErrorCharController extends Controller
 
     /**
      * Add.
+     * Check errors.
+     * @id tptk_error_char_id
+     * @update 0: 工作提交，完成后跳转下一个任务； 1：更新提交，完成后跳转查看页面
+     */
+    public function actionReplace()
+    {
+        $find = '';
+        $replace = '𭌆';
+
+        $models = TptkErrorChar::find()->where(['like', 'confirm_txt', $find])->orderBy('id')->all();
+        foreach ($models as $model) {
+            $model->confirm_txt = str_replace($find, $replace, $model->confirm_txt);
+            echo $model->confirm_txt;
+            $model->save();
+        }
+
+        echo 'success!';
+        die;
+    }
+
+
+    /**
+     * Add.
      * Confirm errors.
      */
     public function actionNoTask()
