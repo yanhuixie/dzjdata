@@ -72,7 +72,7 @@ class TptkAddThouCharController extends Controller
         }
 
         $model = $this->findModel($id);
-        if (empty($model->is_right)) {
+        if ($model->is_right === null) {
             $model->is_right = 1;
         }
 

@@ -84,7 +84,7 @@ $script = <<<SCRIPT
     function show(event) {  
         var ev = event || window.event;  
         //回车键对应的ASCII是13 
-        if (ev.keyCode == 13 || ev.keyCode == 18 || ev.keyCode == 32) {  
+        if (ev.keyCode == 13 || ev.keyCode == 32) {  
             document.getElementById("w0").submit();
         }  
     }  
