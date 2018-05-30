@@ -63,14 +63,13 @@ $this->params['breadcrumbs'][] = '第' . $model->line_num . '行';
             <hr/>
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->field($model, 'is_right')->radioList([1 => '是', 0 => '否'], ['itemOptions' => ['style' => ['width' => '30px', 'height' => '30px']]]); ?>
-            <?= $form->field($model, 'remark')->dropDownList([
-                '',
-                '位置不对',
-                '图文不对应',
-                '千字文不对',
-                '夹注小字缺少文字',
-                '其它',
-            ], ['maxlength' => true, 'style' => 'width:80%']) ?>
+            <?php if (empty($model->remark)) {
+                echo $form->field($model, 'remark')->dropDownList(['', '位置不对', '图文不对应', '千字文不对', '夹注小字缺少文字', '其它',],
+                    ['maxlength' => true, 'style' => 'width:80%']);
+            } else {
+                echo $form->field($model, 'remark')->textInput(['maxlength' => true]);
+            }
+            ?>
             <div class="form-group">
                 <?= Html::submitButton('提交', ['class' => 'btn btn-success']) ?>
             </div>
