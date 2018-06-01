@@ -24,6 +24,8 @@ class UserAuditLogFilter extends ActionFilter
 	        return parent::beforeAction($action);
 	    }
 	    
+	    if(empty(Yii::$app->user->id)) return parent::beforeAction($action);
+	    
 		if(Yii::$app->id == 'frontend' && 
 			$action->controller->id == 'site' && 
 			$action->id == 'index' && 
