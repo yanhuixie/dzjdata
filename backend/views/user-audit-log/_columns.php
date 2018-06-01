@@ -54,7 +54,7 @@ return [
         'dropdown' => false,
         'vAlign'=>'middle',
         'urlCreator' => function($action, $model, $key, $index) { 
-            return Url::to([$action,'id'=>(string)$model->_id]);
+            return Url::to([$action,'id'=>(string)$model->id]);
         },
         'template' => '{view}',
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
