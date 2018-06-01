@@ -22,7 +22,7 @@ return [
     'Block Num' => '栏号',
     'Welcome to {name}, please activate your account' => '欢迎您来到{name}，请激活您的帐号',
     'This email has already been taken.' => '',
-    'Your account has been successfully activated.' => '您的账号已经激活。随喜您报名智能信息中心义工。请您耐心等待，两周之内会有人力资源义工联系您面试。',
+    'Your account has been successfully activated.' => '您的账号已经激活。随喜您的承担。',
     'Your account has been successfully created. Check your email for further instructions.' => '您的账号已建立，请检查您的注册邮箱新邮件以获得进一步说明。',
     'Your activation link: {url}' => '请激活您的帐号：{url}',
     'About' => '关于',
